@@ -50,7 +50,6 @@ Pour les matchs à 2 équipes
 	Si égalité les deux équipes reçoivent 1 pt
 
 
-
 12:25 - Ajout de l'interface graphique sur la page adminStaff.php afin de pouvoir ajouter un nouveau membre du staff
  
 	-> Ajout de la première fonctionnalité: Creation du "select" a partir de tout les rôles dans la base de données
