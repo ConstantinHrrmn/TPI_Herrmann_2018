@@ -8,6 +8,10 @@
 
 8:13 - M. Francois Oscar m'as aider a résoudre un problème de compréhension dans la base de donées. Je ne comprenais pas comment fonctionnais (dans quel sens) le "cascade". J'ai résolu le prblème, quand je suprrime un match, on supprime automatiquement les référence qui disaient quelles équipes jouaient le match.
 
+
+/!\ Variable de Session pour le User : $_SESSION['user']
+
+
 Comptes tests pour le login
 
 Adminstrateur:
@@ -36,6 +40,14 @@ Création de toutes les pages manquants nécessaires dans le site
 -> Aucun souci particulier rencontrer 
 
 Début de la Documentation Technique et le manuel d'utilisateur
+
+-------------------------------------------------------
+Dans la table "Teams" il y à un p_A un p_B et un p_C
+Chaque lettre fait référence à un classement 
+
+A = Kinball
+B = Tchouckball
+C = Course Agile
 
 +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 6 juin 2018
