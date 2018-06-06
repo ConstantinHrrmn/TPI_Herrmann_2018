@@ -27,3 +27,21 @@ Arbitre:
 	Pwd: Arbitre
 
 16:10 - M. Bonvain es passé m'aider à optimiser les méthodes pour créer des prepare statement
+
++=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+5 juin 2018
++=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+
+Création de l'algorithme pour l'attribution des points à la fin d'un match
+
+Pour les matchs à 2 équipes
+	1er: 3pt.
+	2eme: 0pt.
+
+	Si égalité les deux équipes reçoivent 1 pt
+
+
+
+12:25 - Ajout de l'interface graphique sur la page adminStaff.php afin de pouvoir ajouter un nouveau membre du staff
+ 
+	-> Ajout de la première fonctionnalité: Creation du "select" a partir de tout les rôles dans la base de données
