@@ -73,3 +73,6 @@ Je rencontre des difficultés a trouver comment gérer quand je souhaite supprim
 16:13 - le problème à été résolu et j'a également changer la structure
 
 Toutes les parties logiques ce trouvent dans le dossier "controllers" situé dans le dossier "php". Chaque partie logique représente des fonctionnalités autour d'un même sujet. Par exemple la partie logique qui gère toutes actions autour des jours ce trouve dans le fichier "days.c.inc" ("c" pour controller)
+
+
+REMINDER : Je suis entrain de commenter les méthodes, j'en suis à la méthode MakethePoints sur la page points_counting.c.php dans le dossier php/controllers/
