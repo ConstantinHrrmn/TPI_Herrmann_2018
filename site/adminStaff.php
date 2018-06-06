@@ -1,8 +1,37 @@
 <?php
 include "php/functions.inc.php";
+$edit = false;
+$staff = null;
+
 if (!isset($_SESSION['user']) || $_SESSION['user']['idRole'] != "1") {
   header("Location: index.php");
   exit;
+}else {
+
+  $roles = GetAllRoles();
+}
+
+
+if(filter_has_var(INPUT_POST, "ajouter")){
+  $nom = trim(filter_input(INPUT_POST, "nom", FILTER_SANITIZE_STRING));
+  $prenom = trim(filter_input(INPUT_POST, "prenom", FILTER_SANITIZE_STRING));
+  $idRole = trim(filter_input(INPUT_POST, "role", FILTER_SANITIZE_STRING));
+
+  AddStaff($nom, $prenom, $idRole);
+}
+
+if(filter_has_var(INPUT_POST, "modifier")){
+  $nom = trim(filter_input(INPUT_POST, "nom", FILTER_SANITIZE_STRING));
+  $prenom = trim(filter_input(INPUT_POST, "prenom", FILTER_SANITIZE_STRING));
+  $idRole = trim(filter_input(INPUT_POST, "role", FILTER_SANITIZE_STRING));
+
+  UpdateStaff($_SESSION['staff_to_change']['id'], $nom, $prenom, $idRole);
+  $_SESSION['staff_to_change'] = NULL;
+}
+
+if (isset($_SESSION['staff_to_change']) && $_SESSION['staff_to_change'] != NULL) {
+  $edit  = true;
+  $staff = $_SESSION['staff_to_change'];
 }
 ?>
 
@@ -47,6 +76,52 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['idRole'] != "1") {
 
   <section id="services" style="margin-top: 10%" >
     <div class="container">
+
+
+      <div class="row animate-in" data-anim-type="fade-in-up">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="contact-wrapper">
+            <form class="" action="#" method="post">
+
+              <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-3">
+                <input type="text" class="form-control" name="nom" id="nom" placeholder="Nom" value="<?php echo $edit ? $staff['nom'] : ""; ?>">
+              </div>
+
+              <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-3">
+                <input type="text" class="form-control" name="prenom" id="prenom" placeholder="Prenom" value="<?php echo $edit ? $staff['prenom'] : ""; ?>">
+              </div>
+
+              <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-3">
+                <select class="form-control" name="role">
+                  <?php for ($i=0; $i < count($roles); $i++) :?>
+                    <?php if ($edit): ?>
+                      <?php if ($staff['idRole'] == $roles[$i]['id']): ?>
+                        <option selected value="<?php echo $roles[$i]['id']; ?>"><?php echo $roles[$i]['intitule']; ?></option>
+                      <?php else: ?>
+                        <option value="<?php echo $roles[$i]['id']; ?>"><?php echo $roles[$i]['intitule']; ?></option>
+                      <?php endif; ?>
+                    <?php else: ?>
+                      <option value="<?php echo $roles[$i]['id']; ?>"><?php echo $roles[$i]['intitule']; ?></option>
+                    <?php endif; ?>
+
+                  <?php endfor; ?>
+                </select>
+              </div>
+
+              <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-3">
+                <?php if ($edit): ?>
+                  <input type="submit" name="modifier" value="Modifier" class="btn btn-default" style="width: 100%;">
+                  <?php else: ?>
+                  <input type="submit" name="ajouter" value="Ajouter" class="btn btn-default" style="width: 100%;">
+                <?php endif; ?>
+
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+
       <div class="row animate-in" data-anim-type="fade-in-up">
         <div class="row text-center animate-in" data-anim-type="fade-in-up" >
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-bottom">
@@ -61,20 +136,20 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['idRole'] != "1") {
         </div>
         <div class="row text-center animate-in" data-anim-type="fade-in-up" id="work-div">
           <?php
-            $staff = GetAllStaff();
-            for ($staffmember=0; $staffmember < count($staff); $staffmember++):
-              $role = GetRoleById($staff[$staffmember]['idRole']);
-              $group = $role['intitule'];
-              $editLink = "<a style=\"color: white; font-size: 90%;\" href=\"#\">Modifier</a>";
-              $deleteLink = "<a style=\"color: red; font-size: 90%;\" href=\"#\">Supprimer</a>";
+          $staff = GetAllStaff();
+          for ($staffmember=0; $staffmember < count($staff); $staffmember++):
+            $role = GetRoleById($staff[$staffmember]['idRole']);
+            $group = $role['intitule'];
+            $editLink = "<a style=\"color: white; font-size: 90%;\" href=\"php/editStaff.php?id=".$staff[$staffmember]['id']."\">Modifier</a>";
+            $deleteLink = "<a style=\"color: red; font-size: 90%;\" href=\"php/deleteStaff.php?id=".$staff[$staffmember]['id']."\">Supprimer</a>";
             ?>
-          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 <?php echo $group ?>">
-            <div class="work-wrapper">
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 <?php echo $group ?>">
+              <div class="work-wrapper">
 
-              <h4><?php echo $staff[$staffmember]['prenom']." (".$staff[$staffmember]['nom'].") - [" .$editLink."] [".$deleteLink."]" ?></h4>
+                <h4><?php echo $staff[$staffmember]['prenom']." (".$staff[$staffmember]['nom'].") - [" .$editLink."] [".$deleteLink."]" ?></h4>
+              </div>
             </div>
-          </div>
-        <?php endfor; ?>
+          <?php endfor; ?>
         </div>
       </div>
     </div>

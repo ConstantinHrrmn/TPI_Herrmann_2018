@@ -1,5 +1,5 @@
 <?php
-include "php/functions.day.inc.php";
+include "php/functions.inc.php";
 
 if (!isset($_GET['id'])) {
   header("location:index.php");

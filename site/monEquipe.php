@@ -1,5 +1,5 @@
 <?php
-include "php/functions.myteam.inc.php";
+include "php/functions.inc.php";
 
 if (!isset($_GET['id'])) {
   header("Location: index.php");
@@ -7,7 +7,7 @@ if (!isset($_GET['id'])) {
 }else{
   $id = $_GET['id'];
   $team = GetTeamById($id);
-  $days = GetAllDays();
+  $days = GetDays();
 }
 
 ?>
@@ -59,22 +59,22 @@ if (!isset($_GET['id'])) {
   <div class="container">
     <div class="row animate-in" data-anim-type="fade-in-up">
       <?php for ($day=0; $day < count($days); $day++):?>
-        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-12" style="text-align: center">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center">
           <div class="services-wrapper">
-            <h1><?php echo $days[$day][1] ?></h1>
+            <h1><?php echo $days[$day]['nomJour'] ?></h1>
           </div>
         </div>
         <?php
-        $times_on_day = GetAllTimesOnDay($days[$day][0]);
+        $times_on_day = GetAllTimesOnDay($days[$day]['id']);
         for ($i=0; $i < count($times_on_day); $i++):
 
-          $matchs_on_day_and_time = GetAllMatchForTeamOnDayAndTime($team['id'], $days[$day][0], $times_on_day[$i]['idTime']);
+          $matchs_on_day_and_time = GetAllMatchForTeamOnDayAndTime($team['id'], $days[$day]['id'], $times_on_day[$i]['idTime']);
           ?>
           <?php
           if ($matchs_on_day_and_time != false):
             $time = GetTimeById($matchs_on_day_and_time['idTime']);
             ?>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" style="text-align: center">
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="text-align: center">
               <div class="services-wrapper">
                 <h3><?php echo substr($time['start'], 0, -3). " - ".substr($time['end'], 0, -3) ?></h3>
                 <h1>Terrain: <?php echo $matchs_on_day_and_time['terrain'] ?></h1>

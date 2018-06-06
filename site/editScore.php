@@ -1,5 +1,5 @@
 <?php
-include "php/functions.update.inc.php";
+include "php/functions.inc.php";
 
 if (!isset($_GET['id']) || (!isset($_SESSION['user']) && $_SESSION['user']['idRole'] == '1')) {
   header("Location: index.php");

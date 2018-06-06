@@ -1,5 +1,5 @@
 <?php
-include "php/functions.admin.inc.php";
+include "php/functions.inc.php";
 
 if (!isset($_SESSION['user']) || $_SESSION['user']['idRole'] != 1) {
   header("Location: index.php");
@@ -71,7 +71,7 @@ if(filter_has_var(INPUT_POST, "submit")){
               <form class="" action="#" method="post">
                 <div class="form-group">
                   <label for="formGroupExampleInput">VERIFICATION</label>
-                  <input type="text" class="form-control" name="pwd" id="pwd" placeholder="Mot de passe administrateur">
+                  <input type="password" class="form-control" name="pwd" id="pwd" placeholder="Mot de passe administrateur">
                 </div>
 
                 <div class="form-group">

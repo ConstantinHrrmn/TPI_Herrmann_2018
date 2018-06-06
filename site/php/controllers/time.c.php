@@ -1,4 +1,13 @@
 <?php
+// Récupères toutes les heures
+function GetTimes(){
+  $req = "SELECT `id`, `start`, `end` FROM `Time`";
+  $query = connecteur()->prepare($req);
+  $query->execute();
+  $teams = $query->fetchAll(PDO::FETCH_ASSOC);
+  return $teams;
+}
+
 function GetAllTimesOnDay($id){
   $req = "SELECT `idTime` FROM `Games` WHERE `idJour` = :idJour GROUP BY `idTime`";
   $query = connecteur()->prepare($req);

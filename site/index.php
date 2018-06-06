@@ -78,15 +78,15 @@ if(filter_has_var(INPUT_POST, "submit")){
       <div class="row animate-in" data-anim-type="fade-in-up">
 
         <?php
-        $days = GetAllDays();
+        $days = GetDays();
         for ($day=0; $day < count($days); $day++):
-          $linktoDay = "day.php?id=".$days[$day][0];
+          $linktoDay = "day.php?id=".$days[$day]['id'];
           ?>
 
           <a href="<?php echo $linktoDay; ?>" style="color: white">
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" style="text-align: center">
               <div class="services-wrapper">
-                <h1 style="font-size: 500%"><?php echo $days[$day][1] ?></h1>
+                <h1 style="font-size: 500%"><?php echo $days[$day]['nomJour'] ?></h1>
               </div>
             </div>
           </a>

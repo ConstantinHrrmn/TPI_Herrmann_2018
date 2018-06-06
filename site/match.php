@@ -1,5 +1,5 @@
 <?php
-include "php/functions.match.inc.php";
+include "php/functions.inc.php";
 $match = null;
 
 if (!isset($_GET['id'])) {

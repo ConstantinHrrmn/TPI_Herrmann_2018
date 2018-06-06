@@ -63,7 +63,7 @@ $teams = GetAllteams();
         for ($team=0; $team < count($teams); $team++):
           $coach = GetStaffById($teams[$team]['idCoach']);
           ?>
-          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4" style="text-align: center">
             <div class="services-wrapper">
 
               <?php if ($admin):
