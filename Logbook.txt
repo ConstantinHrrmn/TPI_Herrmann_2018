@@ -45,3 +45,9 @@ Pour les matchs à 2 équipes
 12:25 - Ajout de l'interface graphique sur la page adminStaff.php afin de pouvoir ajouter un nouveau membre du staff
  
 	-> Ajout de la première fonctionnalité: Creation du "select" a partir de tout les rôles dans la base de données
+
+13:16 - Il est possible de modifier un membre du staff 
+
+Je rencontre des difficultés a trouver comment gérer quand je souhaite supprimer un membre du staff
+
+16:13 - le problème à été résolu et j'a également changer la structure
