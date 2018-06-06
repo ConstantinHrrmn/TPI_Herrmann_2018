@@ -1,7 +1,29 @@
++=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 4 juin 2018
++=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 
 - Préparation du template
 - Création de la base de donnée 
   -> nom de la base de données : TPI_kggs
 
 8:13 - M. Francois Oscar m'as aider a résoudre un problème de compréhension dans la base de donées. Je ne comprenais pas comment fonctionnais (dans quel sens) le "cascade". J'ai résolu le prblème, quand je suprrime un match, on supprime automatiquement les référence qui disaient quelles équipes jouaient le match.
+
+Comptes tests pour le login
+
+Adminstrateur:
+	Id: Administrateur
+	Pwd: Admin
+
+Coach:
+	Id: Coach
+	Pwd: Coach
+
+Bénévole:
+	Id: Benevole
+	pwd: Benevole
+
+Arbitre:
+	Id: Arbitre
+	Pwd: Arbitre
+
+16:10 - M. Bonvain es passé m'aider à optimiser les méthodes pour créer des prepare statement
