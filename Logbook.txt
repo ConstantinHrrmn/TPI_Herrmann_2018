@@ -32,6 +32,15 @@ Arbitre:
 5 juin 2018
 +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 
+Création de toutes les pages manquants nécessaires dans le site 
+-> Aucun souci particulier rencontrer 
+
+Début de la Documentation Technique et le manuel d'utilisateur
+
++=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+6 juin 2018
++=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+
 Création de l'algorithme pour l'attribution des points à la fin d'un match
 
 Pour les matchs à 2 équipes
@@ -51,3 +60,5 @@ Pour les matchs à 2 équipes
 Je rencontre des difficultés a trouver comment gérer quand je souhaite supprimer un membre du staff
 
 16:13 - le problème à été résolu et j'a également changer la structure
+
+Toutes les parties logiques ce trouvent dans le dossier "controllers" situé dans le dossier "php". Chaque partie logique représente des fonctionnalités autour d'un même sujet. Par exemple la partie logique qui gère toutes actions autour des jours ce trouve dans le fichier "days.c.inc" ("c" pour controller)
