@@ -1,6 +1,16 @@
 <?php
 
-// Récupère toutes les équipes de la base de données
+/**
+* Récupère toutes les équipes dans la table Teams
+*
+* @return array un tableau avec toutes les équipes
+*      [index]
+*        ['id'] -> l'id de l'équipe
+*        ['nom'] -> le nom de l'équipe
+*        ['idCoach'] -> l'id du coach correspndant à l'équipe
+*        ['total'] -> le total de points
+*        ['totalDiff'] -> le total de la différence
+*/
 function GetAllteams(){
   static $query = null;
   if ($query == null) {
@@ -18,18 +28,15 @@ function GetAllteams(){
   return $res;
 }
 
-// Récupère toutes les équipes
-function GetTeams(){
-  $req = "SELECT `id`, `nom` FROM `Teams`";
-  $query = connecteur()->prepare($req);
-  $query->execute();
-  $teams = $query->fetchAll(PDO::FETCH_ASSOC);
-  return $teams;
-}
-
-
-// Retourne une équipe d'après son id
-// Retourne FALSE si aucune équipe ne correspond à l'id reçu
+/**
+* Retourne une équipe d'après son id
+*
+* @param int id de l'équipe
+* @return array un tableau avec les infos de l'équipe
+*        ['id'] -> l'id de l'équipe
+*        ['nom'] -> le nom de l'équipe
+*        ['idCoach'] -> l'id du coach correspndant à l'équipe
+*/
 function GetTeamById($id){
   static $query = null;
   if ($query == null) {
@@ -48,29 +55,75 @@ function GetTeamById($id){
   return $res;
 }
 
-// Récupère l'équipe d'un coach d'après son ID
+/**
+* Récupère l'équipe d'un coach d'après l'id du coach
+*
+* @param int id du coach
+* @return array un tableau avec les infos de l'équipe
+*        ['id'] -> l'id de l'équipe
+*        ['nom'] -> le nom de l'équipe
+*/
 function GetTeamByCoachId($id){
-  $req = "SELECT `id`, `nom` FROM `Teams` WHERE `idCoach` = :id LIMIT 1";
-  $query = connecteur()->prepare($req);
-  $query->bindParam(':id', $id, PDO::PARAM_STR);
-  $query->execute();
-  return ($query->fetch(PDO::FETCH_ASSOC));
+  static $query = null;
+  if ($query == null) {
+    $req = "SELECT `id`, `nom` FROM `Teams` WHERE `idCoach` = :id LIMIT 1";
+    $query = connecteur()->prepare($req);
+  }
+  try {
+    $query->bindParam(':id', $id, PDO::PARAM_STR);
+    $query->execute();
+
+    $res = $query->fetch(PDO::FETCH_ASSOC);
+  }
+  catch (Exception $e) {
+    error_log($e->getMessage());
+    $res = false;
+  }
+  return $res;
 }
 
-
-// Met a jour une équipe a l'index indiqué
-// Mise a jour du nom de l'équipe et l'id du coach
+/**
+* Met a jour une équipe a l'index indiqué
+* Mise a jour du nom de l'équipe et l'id du coach
+*
+* @param int id de l'équipe
+* @param string nom de l'équipe
+* @param int id du coach
+*/
 function UpdateTeam($idTeam, $name, $idCoach){
-  $req = "UPDATE `Teams` SET `nom`= :nom,`idCoach`= :coach WHERE `id` = :id";
-  $query = connecteur()->prepare($req);
-  $query->bindParam(':id', $idTeam, PDO::PARAM_STR);
-  $query->bindParam(':nom', $name, PDO::PARAM_STR);
-  $query->bindParam(':coach', $idCoach, PDO::PARAM_STR);
-  $query->execute();
-  $query->fetch();
+  static $query = null;
+
+  if ($query == null) {
+    $req = "UPDATE `Teams` SET `nom`= :nom,`idCoach`= :coach WHERE `id` = :id";
+    $query = connecteur()->prepare($req);
+  }
+  try {
+    $query->bindParam(':id', $idTeam, PDO::PARAM_STR);
+    $query->bindParam(':nom', $name, PDO::PARAM_STR);
+    $query->bindParam(':coach', $idCoach, PDO::PARAM_STR);
+    $query->execute();
+    $query->fetch();
+  }
+  catch (Exception $e) {
+    error_log($e->getMessage());
+  }
 }
 
-
+/**
+* Récupère tout les match pour une équipe durant la journée et un fuseau horaire
+*
+* @param int id de l'équipe
+* @param int id du jour
+* @param int id du fuseau horaire
+* @return array un tableau avec les infos de l'équipe
+*        ['id'] -> l'id du match (game)
+*        ['arbitre'] -> le nom de l'arbitre qui arbitre le match
+*        ['terrain'] -> le nom du terrain
+*        ['idJour'] -> l'id du Jour
+*        ['idTime'] -> l'id du fuseau horaire
+*        ['Nom'] -> le nom du sport que l'équipe joue pour le match
+*        ['played'] -> 1 si la match à été joué, 0 si non
+*/
 function GetAllMatchForTeamOnDayAndTime($idTeam, $idDay, $idTime){
   static $query = null;
   if ($query == null) {

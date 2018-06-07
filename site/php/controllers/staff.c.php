@@ -1,6 +1,17 @@
 <?php
-// Récupère un coach en fonction de son id
-// Si le coach ou l'id n'éxiste pas alors le return sera égal à FALSE
+/**
+* Récupère un coach en fonction de son id
+* Si le coach ou l'id n'éxiste pas alors le return sera égal à FALSE
+*
+* @param int id du membre du staff
+* @return array un tableau avec le membre sélectionner par son id
+*        ['id'] -> l'id du membre
+*        ['nom'] -> le nom
+*        ['prenom'] -> le prénom
+*        ['age'] -> l'âge
+*        ['idRole'] -> l'id de son Rôle
+*        ['phone'] -> le numéro de téléphone
+*/
 function GetStaffById($id){
   static $query = null;
   if ($query == null) {
@@ -19,7 +30,18 @@ function GetStaffById($id){
   return $res;
 }
 
-// Récupère tout les membres du staff
+/**
+* Récupère tout les membres du staff
+*
+* @return array un tableau avec tout les membres
+*      [index]
+*        ['id'] -> l'id du membre
+*        ['nom'] -> le nom
+*        ['prenom'] -> le prénom
+*        ['age'] -> l'âge
+*        ['idRole'] -> l'id de son Rôle
+*        ['phone'] -> le numéro de téléphone
+*/
 function GetAllStaff(){
   static $query = null;
   if ($query == null) {
@@ -37,6 +59,13 @@ function GetAllStaff(){
   return $res;
 }
 
+/**
+* Ajoute un membre à la table staff
+*
+* @param string le nom
+* @param string le prénom
+* @param int id du Rôle
+*/
 function AddStaff($nom, $prenom, $idRole){
   static $query = null;
 
@@ -56,6 +85,14 @@ function AddStaff($nom, $prenom, $idRole){
   }
 }
 
+/**
+* Met à jour un membre du staff
+*
+* @param int id du membre à modifier
+* @param string le nom
+* @param string le prénom
+* @param int id du Rôle
+*/
 function UpdateStaff($id, $nom, $prenom, $idRole){
   static $query = null;
 
@@ -76,9 +113,17 @@ function UpdateStaff($id, $nom, $prenom, $idRole){
   }
 }
 
+/**
+* Supprime un membre du staff
+* Supprime également la liaison entre luo et son équipe si il à un équipe
+*
+* @param int id du membre à supprimer
+*/
 function DeleteStaff($id){
 
+  // d'abord on supprime la liason
   RemoveCoachFromHisTeam($id);
+  static $query = null;
 
   if ($query == null) {
     $req = "DELETE FROM `Staff` WHERE `id` = :id";
@@ -94,14 +139,37 @@ function DeleteStaff($id){
   }
 }
 
-// Retourne tout les coachs
+/**
+* Retourne tout les coachs qui n'ont pas d'équipe
+*
+* @return array un tableau avec tout les membres
+*      [index]
+*        ['id'] -> l'id du membre
+*        ['nom'] -> le nom
+*        ['prenom'] -> le prénom
+*/
 function GetAllCoachsWithoutTeam(){
-  $req = "SELECT `id`, `nom`, `prenom` FROM `Staff` WHERE `idRole` = 2 AND `id` NOT IN (SELECT idCoach FROM TEAMS WHERE id != 0) ORDER BY `prenom`";
-  $sth = connecteur()->prepare($req);
-  $sth->execute();
-  return ($sth->fetchAll(PDO::FETCH_ASSOC));
+  static $query = null;
+  if ($query == null) {
+    $req = "SELECT `id`, `nom`, `prenom` FROM `Staff` WHERE `idRole` = 2 AND `id` NOT IN (SELECT idCoach FROM TEAMS WHERE id != 0) ORDER BY `prenom`";
+    $query = connecteur()->prepare($req);
+  }
+  try {
+    $query->execute();
+    $res = $query->fetchAll(PDO::FETCH_ASSOC);
+  }
+  catch (Exception $e) {
+    error_log($e->getMessage());
+    $res = false;
+  }
+  return $res;
 }
 
+/**
+* Met à -1 l'équipe avec l'id du coach indiqué
+*
+* @param int id du coach
+*/
 function RemoveCoachFromHisTeam($idCoach){
   if ($query == null) {
     $req = "UPDATE `Teams` SET `idCoach`= -1 WHERE `idCoach` = :idCoach";
@@ -117,15 +185,38 @@ function RemoveCoachFromHisTeam($idCoach){
   }
 }
 
-// Retourne tout les coachs
+/**
+* Retourne tout les arbitres de la table Staff
+*
+* @return array un tableau avec tout les arbitres
+*      [index]
+*        ['id'] -> l'id du membre
+*        ['nom'] -> le nom
+*        ['prenom'] -> le prénom
+*/
 function GetArbitres(){
-  $req = "SELECT `id`, `nom`, `prenom` FROM `Staff` WHERE `idRole` = 3 ORDER BY `prenom`";
-  $sth = connecteur()->prepare($req);
-  $sth->execute();
-  return ($sth->fetchAll(PDO::FETCH_ASSOC));
+  static $query = null;
+  if ($query == null) {
+    $req = "SELECT `id`, `nom`, `prenom` FROM `Staff` WHERE `idRole` = 3 ORDER BY `prenom`";
+    $query = connecteur()->prepare($req);
+  }
+  try {
+    $query->execute();
+    $res = $query->fetchAll(PDO::FETCH_ASSOC);
+  }
+  catch (Exception $e) {
+    error_log($e->getMessage());
+    $res = false;
+  }
+  return $res;
 }
 
-// Verifie si l'id est un admin ou non
+/**
+* Verifie si un membre es admin
+*
+* @param int id du membre
+* @return boolean true si il est admin, false si non
+*/
 function IsAdmin($id){
   static $query = null;
 

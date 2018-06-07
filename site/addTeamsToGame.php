@@ -1,27 +1,35 @@
 <?php
+// On include le fichier avec les fonctions
 include "php/functions.inc.php";
 
+// On vérifie si l'utilisateur est connecté et qu'il s'agit bien d'un administrateur
 if (!isset($_SESSION['user']) || $_SESSION['user']['idRole'] != "1") {
  header("Location: ../index.php");
  exit;
 }
 
+// On vérifie si on est bien passé par l'étape des propriété du match
 if (!isset($_SESSION['newGame'])) {
+  // sinon on redirige sur la page adéquate
   header("Location: newGame.php");
   exit;
 }
 
+// On récupère les propriétés du match
 $match = $_SESSION['newGame'];
+// On récupère toutes les équipes
 $teams = GetAllteams();
 
+// Regarde si le bouton valider à été appuyer
 if(filter_has_var(INPUT_POST, "valider")){
-
-
   $teamsSelected = [];
+  // On parcours toutes les équipes sélectionnées
   for ($team = 0; $team < $match['type']; $team++) {
     $teamsSelected[$team] = $_POST[$team];
   }
   $ma = $_SESSION['newGame'];
+
+  // Création du nouveau match (game)
   CreateNewGame($match['time'], $match['day'], $match['field'], $match['arbitre'], $teamsSelected, $match['sport']);
   header("Location: index.php");
   exit;

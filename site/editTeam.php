@@ -1,24 +1,36 @@
 <?php
+// On include le fichier avec les fonctions
 include "php/functions.inc.php";
 
+// On vérifie si l'utilisateur est connecté et qu'il s'agit bien d'un administrateur
 if (!isset($_SESSION['user']) || $_SESSION['user']['idRole'] != "1") {
   header("Location: index.php");
   exit;
 }
 
+// On vérifie si l'id ce trouve dans l'url
 if (isset($_GET['id'])) {
+  // On récupère l'id
   $idTeam = $_GET['id'];
+  // On recherche l'équipe d'après son id
   $team = GetTeamById($idTeam);
+  // On recherche tout les coachs sans équipes
   $coachs = GetAllCoachsWithoutTeam();
 }
 
+// Regarde si le bouton valider à été appuyer
 if(filter_has_var(INPUT_POST, "Valider")){
+  // On filtre les données
   $name = trim(filter_input(INPUT_POST, "name", FILTER_SANITIZE_STRING));
   $idCoach = trim(filter_input(INPUT_POST, "coach", FILTER_SANITIZE_STRING));
 
+  // On vérifie si l'id ce trouve dans l'url
   if (isset($_GET['id'])) {
+    // On récupère l'id dans l'url
     $id = $_GET['id'];
+    // On met à jour l'équipe
     UpdateTeam($id, $name, $idCoach);
+    // Redirection sur la page des membres
     header("Location: teams.php");
     exit;
   }

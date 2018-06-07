@@ -1,12 +1,17 @@
 <?php
+// On include le fichier avec les fonctions
 include "php/functions.inc.php";
 
+// On vérifie si l'id ce trouve dans l'url
 if (!isset($_GET['id'])) {
   header("Location: index.php");
   exit;
 }else{
+  // On récupère l'id dans l'url
   $id = $_GET['id'];
+  // On récupères toutes les infos de l'équipe
   $team = GetTeamById($id);
+  // On récupère tout les jours
   $days = GetDays();
 }
 
@@ -65,9 +70,11 @@ if (!isset($_GET['id'])) {
           </div>
         </div>
         <?php
+        // On récupère tout les fuseaux horaires
         $times_on_day = GetAllTimesOnDay($days[$day]['id']);
+        // On parcours la liste des fuseaux horaires
         for ($i=0; $i < count($times_on_day); $i++):
-
+          // On récupères tout les match de l'équipe pour un jour et un fuseau horaire
           $matchs_on_day_and_time = GetAllMatchForTeamOnDayAndTime($team['id'], $days[$day]['id'], $times_on_day[$i]['idTime']);
           ?>
           <?php

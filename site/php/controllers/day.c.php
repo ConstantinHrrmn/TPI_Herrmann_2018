@@ -1,6 +1,13 @@
 <?php
 
-// Récupère tous les jours
+/**
+* Récupère tout les jours
+*
+* @return array un tableau avec tout les jours
+*           [index]
+*              ['id'] -> l'id du jour
+*              ['nomJour'] -> le nom du jour
+*/
 function GetDays(){
   static $query = null;
   if ($query == null) {
@@ -18,11 +25,15 @@ function GetDays(){
   return $res;
 }
 
-// Récupère tout les matchs
-// Paramètres :
-//    $day -> L'id du jour
-//    $time -> l'id du crénau horaire
-// Retourne tout les matchs qui ont lieu
+/**
+* Récupère tout les matchs
+*
+* @param int l'id du jour
+* @param int l'id du crénau horaire
+* @return array un tableau avec le classement
+*           [index]
+*              ['id'] -> l'id de l'équipe
+*/
 function GetMatchsOnDayAndTime($day, $time){
   static $query = null;
   if ($query == null) {

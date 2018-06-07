@@ -1,22 +1,32 @@
 <?php
-
+// On include le fichier avec les fonctions
 include "php/functions.inc.php";
 
 $error = false;
 
+// Regarde si le bouton valider à été appuyer
 if(filter_has_var(INPUT_POST, "submit")){
-
+  // On filtre toutes les infos
   $id = trim(filter_input(INPUT_POST, "user", FILTER_SANITIZE_STRING));
   $pass = trim(filter_input(INPUT_POST, "pwd", FILTER_SANITIZE_STRING));
+
+  // On vérifie le login
   $user = login($id, $pass);
 
+  // Si le login est valable
   if ($user != false) {
 
+    // On met les données de l'utilisateur dans la session
     $_SESSION['user'] = $user;
 
+    // Si le user est un coach
     if ($user['idRole'] == "2") {
+      // On va chercher son équipe
       $team = GetTeamByCoachId($user['id']);
+
+      // Si il possède une équipe
       if ($team != false) {
+        // On ajoute son équipe dans la session
         $_SESSION['MyTeam'] = $team;
       }
     }
@@ -43,15 +53,10 @@ if(filter_has_var(INPUT_POST, "submit")){
   <link href="assets/js/source/jquery.fancybox.css" rel="stylesheet" />
   <link href="assets/css/animations.min.css" rel="stylesheet" />
   <link href="assets/css/style-blue.css" rel="stylesheet" />
-
-
 </head>
 
 <body data-spy="scroll" data-target="#menu-section">
 
-  <!--MENU SECTION START-->
-
-  <!--MENU SECTION START-->
   <div class="navbar navbar-inverse navbar-fixed-top scroll-me" id="menu-section" >
     <div class="container">
       <div class="navbar-header">
@@ -67,12 +72,7 @@ if(filter_has_var(INPUT_POST, "submit")){
       <?php include "php/navbar.inc.php" ?>
     </div>
   </div>
-  <!--MENU SECTION END-->
 
-  <!--
-    DAYS SECTION END
-    Affichage des jours
-  -->
   <section id="services" style="margin-top: 10%" >
     <div class="container">
       <div class="row animate-in" data-anim-type="fade-in-up">
@@ -80,6 +80,8 @@ if(filter_has_var(INPUT_POST, "submit")){
         <?php
         $days = GetDays();
         for ($day=0; $day < count($days); $day++):
+          $matchs_count = CountGamesOnDay($days[$day]['id']);
+          $label_match = $matchs_count['matchs'] > 1 ? $matchs_count['matchs']." matchs" : ($matchs_count['matchs'] == 1 ? $matchs_count['matchs']." match" : "Aucun match");
           $linktoDay = "day.php?id=".$days[$day]['id'];
           ?>
 
@@ -87,6 +89,7 @@ if(filter_has_var(INPUT_POST, "submit")){
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" style="text-align: center">
               <div class="services-wrapper">
                 <h1 style="font-size: 500%"><?php echo $days[$day]['nomJour'] ?></h1>
+                <h4><?php echo $label_match; ?></h4>
               </div>
             </div>
           </a>

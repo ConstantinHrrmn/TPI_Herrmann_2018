@@ -1,29 +1,42 @@
 <?php
+// On include le fichier avec les fonctions
 include "php/functions.inc.php";
 
+// On vérifie si l'utilisateur est connecté et qu'il s'agit bien d'un administrateur
+// On vérifie si l'id ce trouve dans l'url
 if (!isset($_GET['id']) || (!isset($_SESSION['user']) && $_SESSION['user']['idRole'] == '1')) {
   header("Location: index.php");
   exit;
 }
 else{
+  // On récupère l'id dans l'url
   $id = $_GET['id'];
+  // On récupère les infos du match
   $match = GetAllMatchInfos($id);
 }
 
 $error = false;
 
+// Regarde si le bouton enregistrer à été appuyer
 if(filter_has_var(INPUT_POST, "enregistrer")){
   $teams = [];
+
+  // On récupères les scores des équipes dans le $_POST
   for ($team=0; $team < count($match['teams']); $team++) {
     $result_team = $_POST[$match['teams'][$team]['numero']];
+    // On vérifie qu'il s'agit bien d'un numero
     if (ctype_digit($result_team)){
       $teams[$team]['score'] =  $result_team;
       $teams[$team]['infos'] = $match['teams'][$team];
     }
   }
 
+  // On met à jour les scores
   UpdateScore($teams, $match['infos']['id']);
+  // On indique que le match est terminé
   SetGameToDone($match['infos']['id']);
+
+  // On rdirige sur l'index
   header("Location: index.php");
   exit;
 }

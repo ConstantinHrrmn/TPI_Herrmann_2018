@@ -1,24 +1,29 @@
 <?php
+// On include le fichier avec les fonctions
 include "php/functions.inc.php";
 if (!isset($_SESSION['user']) || $_SESSION['user']['idRole'] != "1") {
   header("Location: index.php");
   exit;
 }
 
+// On déclare les variables de la page
 $times = GetTimes();
 $days = GetDays();
 $fields = GetFields();
 $arbitres = GetArbitres();
 $sports = GetSportTypes();
 
+// Regarde si le bouton continuer à été appuyer
 if(filter_has_var(INPUT_POST, "continuer")){
 
+  // On filtre toutes les entrées
   $time = trim(filter_input(INPUT_POST, "time", FILTER_SANITIZE_STRING));
   $day = trim(filter_input(INPUT_POST, "day", FILTER_SANITIZE_STRING));
   $field = trim(filter_input(INPUT_POST, "field", FILTER_SANITIZE_STRING));
   $arbitre = trim(filter_input(INPUT_POST, "arbitre", FILTER_SANITIZE_STRING));
   $type = trim(filter_input(INPUT_POST, "type", FILTER_SANITIZE_STRING));
 
+  // On introduit toutes infos du match dans
   $_SESSION['newGame']['time'] = $time;
   $_SESSION['newGame']['day'] = $day;
   $_SESSION['newGame']['field'] = $field;

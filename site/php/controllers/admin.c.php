@@ -1,8 +1,10 @@
 <?php
-// ResetCamp permet de faire un reset du Camp
-// Remise à zéro de tout les classements
-// Efface le contenu de la table Games
-// Efface toutes les référence dans la table 'plays'
+/**
+* ResetCamp permet de faire un reset du Camp
+* Remise à zéro de tout les classements
+* Efface le contenu de la table Games
+* Efface toutes les référence dans la table 'plays'
+*/
 function ResetCamp(){
   static $query = null;
 

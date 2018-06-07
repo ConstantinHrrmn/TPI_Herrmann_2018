@@ -1,5 +1,12 @@
 <?php
-// Récupère tous les terrains
+/**
+* Récupère tout les terrains
+*
+* @return array un tableau avec le classement
+*           [index]
+*              ['id'] -> l'id du terrain
+*              ['Nom'] -> le nom du terrain
+*/
 function GetFields(){
  static $query = null;
  if ($query == null) {

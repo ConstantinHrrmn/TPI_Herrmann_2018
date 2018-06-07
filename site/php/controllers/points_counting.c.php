@@ -158,6 +158,12 @@ function GetMainClassement($idTeam, $classment){
 * @param int l'id du match
 * @param array le match en question
 * @return array un tableau avec tout les scores ainsi que les poitns obtenus par équipe
+*           [index]
+*              ['id'] -> l'id de l'équipe
+*              ['m'] -> points marqués par l'équipe
+*              ['r'] -> nombre de points encaisser
+*              ['d'] -> la différence de points
+*              ['points'] -> les points recus grâce au match (3 si victoire, 1 si égalité, 0 si défaite)
 */
 function GetMatchResults($idGame, $game){
   static $query = null;
@@ -189,10 +195,17 @@ function GetMatchResults($idGame, $game){
 * @param array les équipes qui ont participer au match
 * @param array le match en question
 * @return array un tableau avec tout les points obtenus par équipe
+*           [index]
+*              ['id'] -> l'id de l'équipe
+*              ['m'] -> points marqués par l'équipe
+*              ['r'] -> nombre de points encaisser
+*              ['d'] -> la différence de points
+*              ['points'] -> les points recus grâce au match (3 si victoire, 1 si égalité, 0 si défaite)
 */
 function MakeTheResults($teams, $game){
   $result = [];
 
+  // On parcours toutes les équipes
   for ($temp=0; $temp < count($teams); $temp++) {
     $result[$temp]['id'] = $teams[$temp]['id'];
     $result[$temp]['m'] = $teams[$temp]['score'];
@@ -214,7 +227,7 @@ function MakeTheResults($teams, $game){
 /**
 * Caclucule les points pour chaque équipe
 *
-* @param array les équipes
+* @param array les équipes classées par résultats obtenus lors du match
 * @param array le match en question
 * @return array un tableau avec tout les points pour chaque équipe
 */
@@ -257,36 +270,65 @@ function MakethePoints($teams, $game){
     $t1 = $teams[0]['m'];
     $t2 = $teams[1]['m'];
     $t3 = $teams[2]['m'];
+    // Si le score de l'équipe 1 est plus grand que tout les autres scores
     if ($t1 > $t2 && $t1 > $t3) {
+      // Alors l'équipe 1 reçois 3 points
       $table[0]['points'] = 3;
+
+      // Si le score de l'équipe 2 est plus grand que celui de l'équipe 3
       if ($t2 > $t3) {
+        // L'équipe 2 reçois 1 points
         $table[1]['points'] = 1;
+        // L'équipe 3 reçois 0 points
         $table[2]['points'] = 0;
-      }elseif ($t2 == $t3) {
+      }
+      // L'équipe 2 et l'équipe 3 ont les mêmes scores
+      elseif ($t2 == $t3) {
+        // Les 2 équipes recoivent 1 point
         $table[1]['points'] = 1;
         $table[2]['points'] = 1;
       }
-    }elseif ($t1 == $t2 && $t1 > $t3) {
+    }
+    // Si les deux prmières équipes sont égalités ET que la troisième équipe a un score inferieur aux deux autres
+    elseif ($t1 == $t2 && $t1 > $t3) {
+      // Les deux premières équipes recoivent 1 point
       $table[0]['points'] = 1;
       $table[1]['points'] = 1;
+
+      // La troisième équipe reçois aucun point
       $table[2]['points'] = 0;
-    }elseif ($t1 == $t2 && $t1 == $t3) {
+    }
+    // Si toutes les équipes sont à égalités
+    elseif ($t1 == $t2 && $t1 == $t3) {
+      // Si le match à déjà été joué
       if ($game['infos']['played'] == 1) {
+        // Toutes les équipes reçoivent 1 point
         $table[0]['points'] = 1;
         $table[1]['points'] = 1;
         $table[2]['points'] = 1;
-      }else{
+      }
+      // Si le match n'as pas encore été joué
+      else{
+        // Toutes les équipes reçoivent aucun point
         $table[0]['points'] = 0;
         $table[1]['points'] = 0;
         $table[2]['points'] = 0;
       }
-
     }
   }
 
   return $table;
 }
 
+/**
+* Met à jour la table du classement principale
+*
+* @param int id de l'équipe
+* @param int les points à ajouter
+* @param int les points marqués
+* @param int les points reçus
+* @param string le classement dans lequel ajouter les points
+*/
 function UpdateMainTable($idTeam, $points_to_add, $points_m, $points_r, $classement){
   try {
     $req = "UPDATE `Teams` SET `p_$classement` = $points_to_add,`m_$classement` = $points_m,`r_$classement` = $points_r WHERE `id` = $idTeam";
@@ -299,6 +341,13 @@ function UpdateMainTable($idTeam, $points_to_add, $points_m, $points_r, $classem
   }
 }
 
+/**
+* Retorune l'id du Sport du match
+*
+* @param int id du match
+* @return array un tableau avec l'id du match
+*           ['idSport'] -> l'id du sport
+*/
 function GetTypeOfClassement($idGame){
   static $query = null;
 
@@ -318,6 +367,12 @@ function GetTypeOfClassement($idGame){
   return $res;
 }
 
+/**
+* Met à jour le champ "played" de la tables games
+* Met le champ à 1, ce qui indique que le match à été joué
+*
+* @param int id du match (game)
+*/
 function SetGameToDone($id){
   static $query = null;
 
@@ -335,6 +390,14 @@ function SetGameToDone($id){
   }
 }
 
+/**
+* Retourne le Score pour une équipe dans un match (game)
+*
+* @param int id de l'équipe
+* @param int id du match (game)
+* @return array un tableau avec le scores
+*               ['score'] -> le score de l'équipe dans le match
+*/
 function GetScoreForTeamInMatch($idTeam, $idGame){
   static $query = null;
 

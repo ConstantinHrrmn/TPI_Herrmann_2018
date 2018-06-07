@@ -1,12 +1,16 @@
 <?php
+// On include le fichier avec les fonctions
 include "php/functions.inc.php";
 $match = null;
 
+// On vérifie si l'id ce trouve dans l'url
 if (!isset($_GET['id'])) {
   header("Location: index.php");
   exit;
 }else{
+  // On récupère l'id
   $id = $_GET['id'];
+  // On récupère les infos du match
   $match = GetAllMatchInfos($id);
 }
 

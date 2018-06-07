@@ -1,36 +1,48 @@
 <?php
+// On vérifie si l'utilisateur est connecté et qu'il s'agit bien d'un administrateur
 include "php/functions.inc.php";
+
 $edit = false;
 $staff = null;
 
+// On vérifie si l'utilisateur est connecté et qu'il s'agit bien d'un administrateur
 if (!isset($_SESSION['user']) || $_SESSION['user']['idRole'] != "1") {
   header("Location: index.php");
   exit;
 }else {
-
+  // on récupères tout les rôles
   $roles = GetAllRoles();
 }
 
-
+// Regarde si le bouton ajouter à été appuyer
 if(filter_has_var(INPUT_POST, "ajouter")){
+  // On filtre toutes les données
   $nom = trim(filter_input(INPUT_POST, "nom", FILTER_SANITIZE_STRING));
   $prenom = trim(filter_input(INPUT_POST, "prenom", FILTER_SANITIZE_STRING));
   $idRole = trim(filter_input(INPUT_POST, "role", FILTER_SANITIZE_STRING));
 
+  // On ajoute un nouveau membre du staff
   AddStaff($nom, $prenom, $idRole);
 }
 
+// Regarde si le bouton modifier à été appuyer
 if(filter_has_var(INPUT_POST, "modifier")){
+  // On filtre les données
   $nom = trim(filter_input(INPUT_POST, "nom", FILTER_SANITIZE_STRING));
   $prenom = trim(filter_input(INPUT_POST, "prenom", FILTER_SANITIZE_STRING));
   $idRole = trim(filter_input(INPUT_POST, "role", FILTER_SANITIZE_STRING));
 
+  // On met à jour le staff
   UpdateStaff($_SESSION['staff_to_change']['id'], $nom, $prenom, $idRole);
+
+  // On remet la variable de la session à null
   $_SESSION['staff_to_change'] = NULL;
 }
 
+
 if (isset($_SESSION['staff_to_change']) && $_SESSION['staff_to_change'] != NULL) {
   $edit  = true;
+  // Le staff devvient le staff qui ce trouve dans la session
   $staff = $_SESSION['staff_to_change'];
 }
 ?>
@@ -94,8 +106,8 @@ if (isset($_SESSION['staff_to_change']) && $_SESSION['staff_to_change'] != NULL)
               <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-3">
                 <select class="form-control" name="role">
                   <?php for ($i=0; $i < count($roles); $i++) :?>
-                    <?php if ($edit): ?>
-                      <?php if ($staff['idRole'] == $roles[$i]['id']): ?>
+                    <?php if ($edit): // Si nous sommes en mode edition?>
+                      <?php if ($staff['idRole'] == $roles[$i]['id']): // Si l'id du Rôle = à l'id du Rôle du membre alors on le sélectionne?>
                         <option selected value="<?php echo $roles[$i]['id']; ?>"><?php echo $roles[$i]['intitule']; ?></option>
                       <?php else: ?>
                         <option value="<?php echo $roles[$i]['id']; ?>"><?php echo $roles[$i]['intitule']; ?></option>
@@ -109,9 +121,9 @@ if (isset($_SESSION['staff_to_change']) && $_SESSION['staff_to_change'] != NULL)
               </div>
 
               <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-3">
-                <?php if ($edit): ?>
+                <?php if ($edit): // Si on est en mode édition, alors le bouton affichera "modifier"?>
                   <input type="submit" name="modifier" value="Modifier" class="btn btn-default" style="width: 100%;">
-                  <?php else: ?>
+                <?php else: // sinon il affichera Ajouter?>
                   <input type="submit" name="ajouter" value="Ajouter" class="btn btn-default" style="width: 100%;">
                 <?php endif; ?>
 

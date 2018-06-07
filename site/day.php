@@ -1,14 +1,21 @@
 <?php
+// On include le fichier avec les fonctions
 include "php/functions.inc.php";
 
+// On vérifie si l'id ce trouve dans l'url
 if (!isset($_GET['id'])) {
+  // Si non, on redirige
   header("location:index.php");
   exit();
 }
+// Si l'id est dans l'url
 else{
+  // Déclaration d'un jour par défaut qui est 1
   $DEFAULT_DAY = 1;
+  // On récupère l'id dans l'url
   $id = $_GET['id'];
 
+  // On recherche tout les fuseaux horaires pour un jour
   $times = GetAllTimesOnDay($id);
 }
 
@@ -57,7 +64,7 @@ else{
     <div class="container">
       <div class="" data-anim-type="">
 
-        <?php if ($times == false): ?>
+        <?php if ($times == false): // Si il n'y pas de fuseaux horaires pour le jour?>
 
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center">
             <div class="services-wrapper">
@@ -65,9 +72,11 @@ else{
             </div>
           </div>
 
-        <?php else: ?>
+        <?php else: // Si il y'a des fuseaux horaires?>
           <?php
+          // On parcours la liste des fuseaux
           for ($time=0; $time < count($times); $time++):
+            // On récupères les infos pour le fuseaux actuel
             $time_provisoire = GetTimeById($times[$time]['idTime']);
             ?>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center">
@@ -77,15 +86,18 @@ else{
             </div>
 
             <?php
+            // On récupère tout les match pour le jour et le fuseau horaire
             $matchs = GetMatchsOnDayAndTime($id ,$times[$time]['idTime']);
 
+            // On parcours toutes la liste des matchs
             for ($m =0; $m < count($matchs); $m++):
               ?>
               <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="text-align: center">
                 <div class="services-wrapper">
-                  <?php $match = GetAllMatchInfos($matchs[$m]['id']);?>
-                  <?php if ($match['infos']['played']): ?>
+                  <?php $match = GetAllMatchInfos($matchs[$m]['id']); // On récupère les infos du match?>
+                  <?php if ($match['infos']['played']): // Si le match à été joué ?>
                     <?php
+                    // si un utilisateur est connecté et qu'il est administrateur
                     if (isset($_SESSION['user']) && $_SESSION['user']['idRole'] = '1'):
                       $link_to_edit = "editScore.php?id=".$match['infos']['id'];
                       ?>
@@ -97,13 +109,17 @@ else{
                     for ($team=0; $team < count($match['teams']); $team++):?>
                     <h2 style="margin: 0;"><?php  echo $score_label." <br> n°".$match['teams'][$team]['numero']." | ".$match['teams'][$team]['score'];?></h2>
                   <?php  endfor; ?>
-                <?php else: ?>
+                <?php else: // Si le match n'as pas encore eu lieu?>
                   <?php
+                  // On récupère les infos du matcg
                   $terrain = $match['infos']['terrain'];
                   $terrain_label = "Terrain: ";
+
+                  // Is match est un boolean qui regarde si il s'agit d'un match ou d'un atelier
                   $is_match = true;
                   ?>
                   <?php
+                  // Si le terrain contient la lettre A, alors il s'agit d'un atelier
                   if (strpos($terrain, 'A') !== false){
                     $terrain_label = "Atelier: ";
                     $is_match = false;
@@ -112,9 +128,10 @@ else{
                   <h3><?php echo $terrain_label.$match['infos']['terrain'] ?></h3>
 
                   <?php
+                  // Création des liens de modification
                   $link_to_match = "match.php?id=".$match['infos']['id'];
                   $teamId_label = $match['teams'][0]['numero'];
-
+                  $link_to_delete_match = "php/deleteMatch.php?id=".$match['infos']['id'];
                   for ($team=1; $team < count($match['teams']); $team++) {
                     $teamId_label = $teamId_label." | ".$match['teams'][$team]['numero'];
                   }
@@ -124,6 +141,9 @@ else{
 
                   <?php if ($is_match): ?>
                     <a href="<?php echo $link_to_match ?>"><h4 style="color: black;"><b>Plus d'infos</b></h4></a>
+                  <?php endif; ?>
+                  <?php if (!$match['played']): ?>
+                    <a href="<?php echo $link_to_delete_match ?>"><h4 style="color: red;"><b>EFFACER</b></h4></a>
                   <?php endif; ?>
 
                 <?php endif; ?>

@@ -1,10 +1,13 @@
 <?php
-// Création d'un nouveau MATCH
-// $Time -> L'id de l'heure à laquelle à lieu le match
-// $day -> L'id du jour ou à lieu le match
-// $field -> L'id du terrains
-// $arbitre -> L'id de l'Arbitres
-// $Teams -> un tableau avec les id des équipes qui jouent le match
+/**
+* Création d'un nouveau MATCH
+*
+* @param int $Time -> L'id de l'heure à laquelle à lieu le match
+* @param int $day -> L'id du jour ou à lieu le match
+* @param int $field -> L'id du terrains
+* @param int $arbitre -> L'id de l'Arbitres
+* @param array $Teams -> un tableau avec les id des équipes qui jouent le match
+*/
 function CreateNewGame($time, $day, $field, $arbitre, $teams, $sport){
   static $query = null;
   if ($query == null) {
@@ -45,9 +48,17 @@ function CreateNewGame($time, $day, $field, $arbitre, $teams, $sport){
   }
 }
 
-// Récupère toutes infos du match
-// $id -> l'id du match
-// Retourne toutes les informations du match
+/**
+* Récupère toutes infos du match
+*
+* @param int $id -> l'id du match
+* @return array un tableau avec le classement
+*           [index]
+*              ['id'] -> l'id de l'équipe
+*              ['played'] -> 1 si il as été joué, 0 si non
+*              ['terrain'] -> le nom du terrain
+*              ['arbitre'] -> le prenom de l'arbitre
+*/
 function GetAllMatchInfos($id){
   $match = [];
   $req = "SELECT `Games`.`id` as id, `Games`.`played` as played, `Field`.`nom` as terrain, `Staff`.`prenom` as arbitre FROM `Games` INNER JOIN `Field` ON `idTerrain` = `Field`.`id` INNER JOIN `Staff` ON `idArbitre` = `Staff`.`id` WHERE `Games`.`id` = :id LIMIT 1";
@@ -67,7 +78,19 @@ function GetAllMatchInfos($id){
   return $match;
 }
 
-// Regarde si l'id du staff est soit un administrateur soit l'arbitre du match en question
+
+
+/**
+* Récupère toutes infos du match
+*
+* @param int $id -> l'id du match
+* @return array un tableau avec le classement
+*           [index]
+*              ['id'] -> l'id de l'équipe
+*              ['played'] -> 1 si il as été joué, 0 si non
+*              ['terrain'] -> le nom du terrain
+*              ['arbitre'] -> le prenom de l'arbitre
+*/
 function IsArbitreOrAdmin($idStaff, $idGame){
   static $query = null;
 
@@ -90,5 +113,54 @@ function IsArbitreOrAdmin($idStaff, $idGame){
   return true;
   else{
     return IsAdmin($idStaff);
+  }
+}
+
+/**
+* Récupère le nombre de matchs qui ont lieu au jour indiqué
+*
+* @param int $id -> l'id du jour
+* @return array un tableau avec le nombre de matchs
+*              ['matchs'] -> le nombre de matchs
+*/
+function CountGamesOnDay($idDay){
+  static $query = null;
+
+  if ($query == null) {
+    $req = "SELECT COUNT(*) as matchs FROM `Games` WHERE `idJour` = :idDay";
+    $query = connecteur()->prepare($req);
+  }
+  try {
+    $query->bindParam(':idDay', $idDay, PDO::PARAM_STR);
+    $query->execute();
+    $res = $query->fetch(PDO::FETCH_ASSOC);
+  }
+  catch (Exception $e) {
+    error_log($e->getMessage());
+    $res = false;
+  }
+
+  return $res;
+}
+
+/**
+* Supprime un match
+*
+* @param int $id -> l'id du du match
+*/
+function DeleteGame($idGame){
+  static $query = null;
+
+  if ($query == null) {
+    $req = "DELETE FROM `Games` WHERE `id` = :id";
+    $query = connecteur()->prepare($req);
+  }
+  try {
+    $query->bindParam(':id', $idGame, PDO::PARAM_STR);
+    $query->execute();
+    $query->fetch();
+  }
+  catch (Exception $e) {
+    error_log($e->getMessage());
   }
 }
