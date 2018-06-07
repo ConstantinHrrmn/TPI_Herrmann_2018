@@ -76,3 +76,17 @@ Toutes les parties logiques ce trouvent dans le dossier "controllers" situé dan
 
 
 REMINDER : Je suis entrain de commenter les méthodes, j'en suis à la méthode MakethePoints sur la page points_counting.c.php dans le dossier php/controllers/
+
++=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+7 juin 2018
++=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+
+Objectifs du jour:
+	- Finir les commentaires
+	- Pouvoir supprimer un match
+
+07:40 - M. Beney nous à proposé de jeter un oeil à la documentation technique
+	-> je n'ai pas encore commencer à la rédiger... mais le template et le document sont prêts
+	-> idem pour le manuel utilisateur
+
+08:18 - Je continue à ajouter des commentaires un peu partout dans le code pour le rendre plus compréhensible
