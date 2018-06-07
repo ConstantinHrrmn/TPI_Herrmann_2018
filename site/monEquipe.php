@@ -63,6 +63,11 @@ if (!isset($_GET['id'])) {
 <section id="services" style="margin-top: 10%" >
   <div class="container">
     <div class="row animate-in" data-anim-type="fade-in-up">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center">
+        <div class="services-wrapper">
+          <h1>Matchs de l'équipe n° <?php echo $team['id'] ?></h1>
+        </div>
+      </div>
       <?php for ($day=0; $day < count($days); $day++):?>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center">
           <div class="services-wrapper">

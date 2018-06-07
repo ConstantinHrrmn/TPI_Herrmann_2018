@@ -10,9 +10,12 @@ function UpdateScore($Teams, $idGame){
 
   // Va rechercher les infos du match
   $game = GetAllMatchInfos($idGame);
+  echo '<pre>' , var_dump($game) , '</pre>';
 
   // Nous récupérons les résultats du match avant la mise à jour des nouveaux résultats
   $old_results = GetMatchResults($idGame, $game);
+  echo '<pre>' , var_dump("OLD") , '</pre>';
+  echo '<pre>' , var_dump($old_results) , '</pre>';
 
   // On parcours le tableau des équipes
   for ($team=0; $team < count($Teams); $team++) {
@@ -58,6 +61,8 @@ function UpdateScore($Teams, $idGame){
 
   // Nous récupérons les résultats du match après la mise a jour des nouveaux résultats
   $new_results = GetMatchResults($idGame, $game);
+  echo '<pre>' , var_dump("OLD") , '</pre>';
+  echo '<pre>' , var_dump($new_results) , '</pre>';
 
   // On parcours toutes les équipes du match
   for ($team=0; $team < count($Teams); $team++) {

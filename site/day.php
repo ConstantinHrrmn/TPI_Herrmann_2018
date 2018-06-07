@@ -142,7 +142,7 @@ else{
                   <?php if ($is_match): ?>
                     <a href="<?php echo $link_to_match ?>"><h4 style="color: black;"><b>Plus d'infos</b></h4></a>
                   <?php endif; ?>
-                  <?php if (!$match['played']): ?>
+                  <?php if (!$match['played'] && isset($_SESSION['user']) && $_SESSION['user']['idRole'] == "1"): ?>
                     <a href="<?php echo $link_to_delete_match ?>"><h4 style="color: red;"><b>EFFACER</b></h4></a>
                   <?php endif; ?>
 
