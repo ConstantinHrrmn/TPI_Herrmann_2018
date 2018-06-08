@@ -3,7 +3,7 @@
 * Récupère un coach en fonction de son id
 * Si le coach ou l'id n'éxiste pas alors le return sera égal à FALSE
 *
-* @param int id du membre du staff
+* @param string id du membre du staff
 * @return array un tableau avec le membre sélectionner par son id
 *        ['id'] -> l'id du membre
 *        ['nom'] -> le nom
@@ -64,7 +64,7 @@ function GetAllStaff(){
 *
 * @param string le nom
 * @param string le prénom
-* @param int id du Rôle
+* @param string id du Rôle
 */
 function AddStaff($nom, $prenom, $idRole){
   static $query = null;
@@ -88,10 +88,10 @@ function AddStaff($nom, $prenom, $idRole){
 /**
 * Met à jour un membre du staff
 *
-* @param int id du membre à modifier
+* @param string id du membre à modifier
 * @param string le nom
 * @param string le prénom
-* @param int id du Rôle
+* @param string id du Rôle
 */
 function UpdateStaff($id, $nom, $prenom, $idRole){
   static $query = null;
@@ -117,7 +117,7 @@ function UpdateStaff($id, $nom, $prenom, $idRole){
 * Supprime un membre du staff
 * Supprime également la liaison entre luo et son équipe si il à un équipe
 *
-* @param int id du membre à supprimer
+* @param string id du membre à supprimer
 */
 function DeleteStaff($id){
 
@@ -168,7 +168,7 @@ function GetAllCoachsWithoutTeam(){
 /**
 * Met à -1 l'équipe avec l'id du coach indiqué
 *
-* @param int id du coach
+* @param string id du coach
 */
 function RemoveCoachFromHisTeam($idCoach){
   if ($query == null) {
@@ -214,7 +214,7 @@ function GetArbitres(){
 /**
 * Verifie si un membre es admin
 *
-* @param int id du membre
+* @param string id du membre
 * @return boolean true si il est admin, false si non
 */
 function IsAdmin($id){

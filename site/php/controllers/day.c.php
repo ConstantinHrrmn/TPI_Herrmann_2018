@@ -28,8 +28,8 @@ function GetDays(){
 /**
 * Récupère tout les matchs
 *
-* @param int l'id du jour
-* @param int l'id du crénau horaire
+* @param string l'id du jour
+* @param string l'id du crénau horaire
 * @return array un tableau avec le classement
 *           [index]
 *              ['id'] -> l'id de l'équipe

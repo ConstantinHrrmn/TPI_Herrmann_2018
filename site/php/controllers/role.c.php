@@ -2,7 +2,7 @@
 /**
 * Retourne le nom (intitule) d'un rôle d'après son id
 *
-* @param int id du Role
+* @param string id du Role
 * @return array un tableau avec le nom
 *        ['intitule'] -> le nom du Role
 */

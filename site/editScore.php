@@ -33,8 +33,7 @@ if(filter_has_var(INPUT_POST, "enregistrer")){
 
   // On met à jour les scores
   UpdateScore($teams, $match['infos']['id']);
-  // On indique que le match est terminé
-  SetGameToDone($match['infos']['id']);
+
 
   // On rdirige sur l'index
   header("Location: index.php");

@@ -31,7 +31,7 @@ function GetAllteams(){
 /**
 * Retourne une équipe d'après son id
 *
-* @param int id de l'équipe
+* @param string id de l'équipe
 * @return array un tableau avec les infos de l'équipe
 *        ['id'] -> l'id de l'équipe
 *        ['nom'] -> le nom de l'équipe

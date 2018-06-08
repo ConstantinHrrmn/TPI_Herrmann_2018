@@ -51,7 +51,7 @@ function CreateNewGame($time, $day, $field, $arbitre, $teams, $sport){
 /**
 * Récupère toutes infos du match
 *
-* @param int $id -> l'id du match
+* @param string $id -> l'id du match
 * @return array un tableau avec le classement
 *           [index]
 *              ['id'] -> l'id de l'équipe
@@ -83,7 +83,7 @@ function GetAllMatchInfos($id){
 /**
 * Récupère toutes infos du match
 *
-* @param int $id -> l'id du match
+* @param string $id -> l'id du match
 * @return array un tableau avec le classement
 *           [index]
 *              ['id'] -> l'id de l'équipe
@@ -119,7 +119,7 @@ function IsArbitreOrAdmin($idStaff, $idGame){
 /**
 * Récupère le nombre de matchs qui ont lieu au jour indiqué
 *
-* @param int $id -> l'id du jour
+* @param string $id -> l'id du jour
 * @return array un tableau avec le nombre de matchs
 *              ['matchs'] -> le nombre de matchs
 */
@@ -146,7 +146,7 @@ function CountGamesOnDay($idDay){
 /**
 * Supprime un match
 *
-* @param int $id -> l'id du du match
+* @param string $id -> l'id du du match
 */
 function DeleteGame($idGame){
   static $query = null;

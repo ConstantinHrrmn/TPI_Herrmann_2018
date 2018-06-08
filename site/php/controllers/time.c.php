@@ -30,7 +30,7 @@ function GetTimes(){
 /**
 * Récupère tout les fuseaux horaires de la table Time pour une journeée (day)
 *
-* @param int id du jour
+* @param string id du jour
 * @return array un tableau avec tout les fuseaux horaires
 *     [index]
 *        ['idTime'] -> l'id du fuseaux
@@ -57,7 +57,7 @@ function GetAllTimesOnDay($id){
 /**
 * Récupère les infos du fuseaux horaire d'après son id
 *
-* @param int id du fuseaux horaire
+* @param string id du fuseaux horaire
 * @return array un tableau avec tout les fuseaux horaires
 *        ['start'] -> l'heure de début
 *        ['end'] -> l'heure de fin

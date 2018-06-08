@@ -5,7 +5,7 @@
 * B = Tchouckball
 * C = Course agile
 *
-* @param int l'id du match
+* @param string l'id du match
 * @param array le match en question
 * @return array un tableau avec le classement
 *           [index]
@@ -17,12 +17,9 @@
 *              ['difference'] -> la différence des scores
 */
 function GetClassement($classement){
-  static $query = null;
-  if ($query == null) {
+  try {
     $req = "SELECT `id`, `nom`, `p_$classement` as points,`m_$classement` as marques, `r_$classement` as recus, `m_$classement`-`r_$classement` as difference FROM `Teams` ORDER BY `p_$classement` DESC, `m_$classement`-`r_$classement` DESC";
     $query = connecteur()->prepare($req);
-  }
-  try {
     $query->execute();
     $res = $query->fetchAll(PDO::FETCH_ASSOC);
   }

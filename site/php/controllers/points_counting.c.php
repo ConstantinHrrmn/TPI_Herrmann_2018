@@ -4,18 +4,18 @@
 * Met à jour les scores et le classement général
 *
 * @param array un tableau contenant les infos des équipes ainsi que les scores obtenus lors du match
-* @param int l'id du match dans lequel les scores on été obtenus
+* @param string l'id du match dans lequel les scores on été obtenus
 */
 function UpdateScore($Teams, $idGame){
 
   // Va rechercher les infos du match
   $game = GetAllMatchInfos($idGame);
-  echo '<pre>' , var_dump($game) , '</pre>';
-
   // Nous récupérons les résultats du match avant la mise à jour des nouveaux résultats
   $old_results = GetMatchResults($idGame, $game);
-  echo '<pre>' , var_dump("OLD") , '</pre>';
-  echo '<pre>' , var_dump($old_results) , '</pre>';
+
+  // On indique que le match est terminé
+  SetGameToDone($idGame);
+  $game = GetAllMatchInfos($idGame);
 
   // On parcours le tableau des équipes
   for ($team=0; $team < count($Teams); $team++) {
@@ -61,8 +61,6 @@ function UpdateScore($Teams, $idGame){
 
   // Nous récupérons les résultats du match après la mise a jour des nouveaux résultats
   $new_results = GetMatchResults($idGame, $game);
-  echo '<pre>' , var_dump("OLD") , '</pre>';
-  echo '<pre>' , var_dump($new_results) , '</pre>';
 
   // On parcours toutes les équipes du match
   for ($team=0; $team < count($Teams); $team++) {
@@ -134,7 +132,7 @@ function UpdateScore($Teams, $idGame){
 /**
 * Retourne le classement principale pour une équipe dans un classement
 *
-* @param int l'id de l'équipe
+* @param string l'id de l'équipe
 * @param string l'id du match dans lequel les scores on été obtenus
 * @return array {id; p; m; r} ou false si non valide
 */
@@ -160,7 +158,7 @@ function GetMainClassement($idTeam, $classment){
 /**
 * Retourne un tableau avec les points et les score par équipe pour un match en question
 *
-* @param int l'id du match
+* @param string l'id du match
 * @param array le match en question
 * @return array un tableau avec tout les scores ainsi que les poitns obtenus par équipe
 *           [index]
@@ -254,10 +252,11 @@ function MakethePoints($teams, $game){
     // Si les deux scores sont à égalité
     elseif ($t1 == $t2) {
       // On vérifie si c'est un nouveau match ou si il à déjà été joué (donc MODIFICATION)
-      if ($game['infos']['played'] == 1) {
+      if ($game['infos']['played'] == "1") {
         $table[0]['points'] = 1;
         $table[1]['points'] = 1;
-      }else{
+      }
+      else{
         $table[0]['points'] = 0;
         $table[1]['points'] = 0;
       }
@@ -306,12 +305,13 @@ function MakethePoints($teams, $game){
     // Si toutes les équipes sont à égalités
     elseif ($t1 == $t2 && $t1 == $t3) {
       // Si le match à déjà été joué
-      if ($game['infos']['played'] == 1) {
+      if ($game['infos']['played'] == "1") {
         // Toutes les équipes reçoivent 1 point
         $table[0]['points'] = 1;
         $table[1]['points'] = 1;
         $table[2]['points'] = 1;
       }
+
       // Si le match n'as pas encore été joué
       else{
         // Toutes les équipes reçoivent aucun point
@@ -328,10 +328,10 @@ function MakethePoints($teams, $game){
 /**
 * Met à jour la table du classement principale
 *
-* @param int id de l'équipe
-* @param int les points à ajouter
-* @param int les points marqués
-* @param int les points reçus
+* @param string id de l'équipe
+* @param string les points à ajouter
+* @param string les points marqués
+* @param string les points reçus
 * @param string le classement dans lequel ajouter les points
 */
 function UpdateMainTable($idTeam, $points_to_add, $points_m, $points_r, $classement){
@@ -349,7 +349,7 @@ function UpdateMainTable($idTeam, $points_to_add, $points_m, $points_r, $classem
 /**
 * Retorune l'id du Sport du match
 *
-* @param int id du match
+* @param string id du match
 * @return array un tableau avec l'id du match
 *           ['idSport'] -> l'id du sport
 */
@@ -376,7 +376,7 @@ function GetTypeOfClassement($idGame){
 * Met à jour le champ "played" de la tables games
 * Met le champ à 1, ce qui indique que le match à été joué
 *
-* @param int id du match (game)
+* @param string id du match (game)
 */
 function SetGameToDone($id){
   static $query = null;
@@ -398,8 +398,8 @@ function SetGameToDone($id){
 /**
 * Retourne le Score pour une équipe dans un match (game)
 *
-* @param int id de l'équipe
-* @param int id du match (game)
+* @param string id de l'équipe
+* @param string id du match (game)
 * @return array un tableau avec le scores
 *               ['score'] -> le score de l'équipe dans le match
 */
