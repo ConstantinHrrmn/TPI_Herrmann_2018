@@ -98,7 +98,7 @@ else{
                   <?php if ($match['infos']['played']): // Si le match à été joué ?>
                     <?php
                     // si un utilisateur est connecté et qu'il est administrateur
-                    if (isset($_SESSION['user']) && $_SESSION['user']['idRole'] = '1'):
+                    if (isset($_SESSION['user']) && $_SESSION['user']['idRole'] == "1"):
                       $link_to_edit = "editScore.php?id=".$match['infos']['id'];
                       ?>
                       <a href="<?php echo $link_to_edit ?>" style="color:red">Modifier les résultats</a>

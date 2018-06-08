@@ -13,8 +13,11 @@
         <li><a href="reset.php">RESET</a></li>
         <li><a href="newGame.php">NOUV. MATCH</a></li>
       <?php endif; ?>
+      <?php if ($idRole == "3"): ?>
+        <li><a href="myMatchs.php">MES MATCHS</a></li>
+      <?php endif; ?>
       <?php if ($idRole == "2" && isset($_SESSION['MyTeam'])): ?>
-        <li><a href="monEquipe.php?id=<?php echo $_SESSION['MyTeam']['id'] ?>">MON EQUIPE (<?php echo $_SESSION['MyTeam']['nom'] ?>)</a></li>
+        <li><a href="myTeam.php?id=<?php echo $_SESSION['MyTeam']['id'] ?>">MON EQUIPE (<?php echo $_SESSION['MyTeam']['nom'] ?>)</a></li>
       <?php endif; ?>
       <li><a href="php/logout.php">DECONNEXION</a></li>
     <?php endif; ?>

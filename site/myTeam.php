@@ -88,6 +88,9 @@ if (!isset($_GET['id'])) {
             ?>
             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="text-align: center">
               <div class="services-wrapper">
+                <?php if ($matchs_on_day_and_time['played'] == "1"): ?>
+                  <h1 style="color: green">MATCH TERMINE</h1>
+                <?php endif; ?>
                 <h3><?php echo substr($time['start'], 0, -3). " - ".substr($time['end'], 0, -3) ?></h3>
                 <h1>Terrain: <?php echo $matchs_on_day_and_time['terrain'] ?></h1>
                 <a href="match.php?id=<?php echo $matchs_on_day_and_time['id'] ?>"><h4>infos match</h4></a>

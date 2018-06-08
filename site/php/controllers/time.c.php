@@ -59,6 +59,7 @@ function GetAllTimesOnDay($id){
 *
 * @param string id du fuseaux horaire
 * @return array un tableau avec tout les fuseaux horaires
+*        ['id'] -> l'id
 *        ['start'] -> l'heure de début
 *        ['end'] -> l'heure de fin
 */
@@ -66,7 +67,7 @@ function GetTimeById($id){
   static $query = null;
 
   if ($query == null) {
-    $req = "SELECT `start`, `end` FROM `Time` WHERE `id` = :id";
+    $req = "SELECT `id`, `start`, `end` FROM `Time` WHERE `id` = :id";
     $query = connecteur()->prepare($req);
   }
   try {

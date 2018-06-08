@@ -39,11 +39,11 @@ if(filter_has_var(INPUT_POST, "modifier")){
   $_SESSION['staff_to_change'] = NULL;
 }
 
-
 if (isset($_SESSION['staff_to_change']) && $_SESSION['staff_to_change'] != NULL) {
   $edit  = true;
   // Le staff devvient le staff qui ce trouve dans la session
   $staff = $_SESSION['staff_to_change'];
+  $_SESSION['staff_to_change'] = null;
 }
 ?>
 
@@ -122,7 +122,12 @@ if (isset($_SESSION['staff_to_change']) && $_SESSION['staff_to_change'] != NULL)
 
               <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-3">
                 <?php if ($edit): // Si on est en mode édition, alors le bouton affichera "modifier"?>
-                  <input type="submit" name="modifier" value="Modifier" class="btn btn-default" style="width: 100%;">
+                  <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                    <input type="submit" name="modifier" value="Modifier" class="btn btn-default" style="width: 100%;">
+                  </div>
+                  <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                    <input type="submit" name="reset" value="Reset" class="btn btn-default" style="width: 100%;">
+                  </div>
                 <?php else: // sinon il affichera Ajouter?>
                   <input type="submit" name="ajouter" value="Ajouter" class="btn btn-default" style="width: 100%;">
                 <?php endif; ?>

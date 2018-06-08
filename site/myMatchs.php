@@ -1,12 +1,14 @@
 <?php
+// On include le fichier avec les fonctions
 include "php/functions.inc.php";
 
-$admin = false;
-if (isset($_SESSION['user']) && $_SESSION['user']['idRole'] == "1") {
-  $admin = true;
+if (!isset($_SESSION['user']) && $_SESSION['user']['idRole'] == "3") {
+  header("Location: index.php");
+  exit;
 }
 
-$teams = GetAllteams();
+$arbitre = $_SESSION['user'];
+$days = GetDays();
 
 ?>
 
@@ -51,41 +53,44 @@ $teams = GetAllteams();
 
   <section id="services" style="margin-top: 10%" >
     <div class="container">
-      <div class="row animate-in" data-anim-type="fade-in-up">
-
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center">
-          <div class="services-wrapper">
-            <h1>Equipes</h1>
-          </div>
-        </div>
-
+      <div class="" data-anim-type="">
         <?php
-        for ($team=0; $team < count($teams); $team++):
-          $coach = GetStaffById($teams[$team]['idCoach']);
+        for ($day=0; $day < count($days); $day++):
+          $times = GetAllTimesOnDay($days[$day]['id']);
           ?>
-          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4" style="text-align: center">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center">
             <div class="services-wrapper">
-
-              <?php if ($admin):
-                $editLink = "editTeam.php?id=".$teams[$team]['id']?>
-                <a href="<?php echo $editLink ?>">Modifier l'équipe</a>
-              <?php endif; ?>
-
-              <h3>n° <?php echo $teams[$team]['id'] ?></h3>
-              <h1><?php echo $teams[$team]['nom'] ?></h1>
-
-              <?php if ($coach == false): ?>
-                <p>Aucun coach</p>
-              <?php else: ?>
-                <p>Coach: <?php echo $coach['prenom'] ?></p>
-              <?php endif; ?>
-              <a href="myTeam.php?id=<?php echo $teams[$team]['id'] ?>">infos matchs</a>
+              <h1><?php echo $days[$day]['nomJour'] ?></h1>
             </div>
           </div>
           <?php
-        endfor;
-        ?>
-
+          for ($time=0; $time < count($times); $time++) :
+            $time_provisoire = GetTimeById($times[$time]['idTime']);
+            $match = GetMacthsForArbitreDayAndTime($arbitre['id'], $time_provisoire['id'], $days[$day]['id']);
+            $link_to_edit = "editScore.php?id=".$match['id'];
+            ?>
+            <?php if ($match != false): ?>
+              <?php if ($match['played'] == "1"): ?>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="text-align: center">
+                  <div class="services-wrapper">
+                    <h1>MATCH TERMINE</h1>
+                    <?php $match_done = GetAllMatchInfos($match['id']); ?>
+                    <?php for ($team=0; $team < count($match_done['teams']); $team++):?>
+                      <h4><?php echo "n°".$match_done['teams'][$team]['numero']." --> ".$match_done['teams'][$team]['score']?></h4>
+                    <?php endfor; ?>
+                  </div>
+                </div>
+              <?php else: ?>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="text-align: center">
+                  <div class="services-wrapper">
+                    <h1><?php echo $match['terrain'] ?></h1>
+                    <a href="<?php echo $link_to_edit ?>"><h3 style="color: green;">Enrengistrer un résultat</h3></a>
+                  </div>
+                </div>
+              <?php endif; ?>
+            <?php endif; ?>
+          <?php endfor; ?>
+        <?php endfor; ?>
       </div>
     </div>
   </section>

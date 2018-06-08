@@ -164,3 +164,37 @@ function DeleteGame($idGame){
     error_log($e->getMessage());
   }
 }
+
+/**
+* Récupère le match pour l'arbitre à une heure et un jour
+*
+* @param string $idStaff -> l'id due l'arbitre
+* @param string $idDay -> l'id du jour
+* @param string $idTime -> l'id du crénau horaire
+* @return array un tableau avec le nombre de matchs
+*           [index]
+*              ['id'] -> l'id du match
+*              ['terrain'] -> le nom du terrain
+*              ['played'] -> si le match à été jouer ou non
+*/
+function GetMacthsForArbitreDayAndTime($idStaff, $idDay, $idTime){
+  static $query = null;
+
+  if ($query == null) {
+    $req = "SELECT `Games`.`id` as id, `Field`.`Nom`as terrain, `Games`.`played` as played FROM `Games` INNER JOIN `Field` ON `Field`.`id` = `Games`.`idTerrain` WHERE `Games`.`idArbitre` = :idStaff AND `Games`.`idJour` = :idDay AND `Games`.`idTime` = :idTime";
+    $query = connecteur()->prepare($req);
+  }
+  try {
+    $query->bindParam(':idStaff', $idStaff, PDO::PARAM_STR);
+    $query->bindParam(':idDay', $idDay, PDO::PARAM_STR);
+    $query->bindParam(':idTime', $idTime, PDO::PARAM_STR);
+    $query->execute();
+    $res = $query->fetch(PDO::FETCH_ASSOC);
+  }
+  catch (Exception $e) {
+    error_log($e->getMessage());
+    $res = false;
+  }
+
+  return $res;
+}

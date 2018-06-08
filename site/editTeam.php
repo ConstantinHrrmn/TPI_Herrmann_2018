@@ -81,7 +81,7 @@ if(filter_has_var(INPUT_POST, "Valider")){
 
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <div class="services-wrapper">
-
+            <a href="teams.php">Retour</a>
             <h1>Modification de l'équipe n° <?php echo $idTeam ?></h1>
             <form class="" action="#" method="post">
               <div class="form-group">
@@ -92,7 +92,7 @@ if(filter_has_var(INPUT_POST, "Valider")){
               <div class="form-group">
                 <label for="formGroupExampleInput2">Coach</label>
                 <select class="form-control" name="coach">
-                  <option value="0">Aucun coach</option>
+                  <option value="-1">Aucun coach</option>
                   <?php $selectedCoach = GetStaffById($team['idCoach']) ?>
                   <?php if ($selectedCoach != false): ?>
                     <option selected value="<?php echo $selectedCoach['id']?>"><?php echo $selectedCoach['prenom']." (".$selectedCoach['nom'].")"?></option>
