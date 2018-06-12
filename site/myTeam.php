@@ -1,18 +1,28 @@
 <?php
 // On include le fichier avec les fonctions
 include "php/functions.inc.php";
+$redirect = false;
 
 // On vérifie si l'id ce trouve dans l'url
 if (!isset($_GET['id'])) {
-  header("Location: index.php");
-  exit;
+  $redirect = true;
 }else{
   // On récupère l'id dans l'url
   $id = $_GET['id'];
   // On récupères toutes les infos de l'équipe
   $team = GetTeamById($id);
+
+  // On vérifie si l'équipe existe ou non
+  if ($team == false)
+    $redirect = true;
+
   // On récupère tout les jours
   $days = GetDays();
+}
+
+if ($redirect) {
+  header("Location: index.php");
+  exit;
 }
 
 ?>

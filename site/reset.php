@@ -12,6 +12,9 @@ if(filter_has_var(INPUT_POST, "submit")){
     ResetCamp();
     $message = "Camp réinitialisé avec succès";
     echo "<script type='text/javascript'>alert('$message');</script>";
+  }else{
+    $message = "Mot de passe éronné !";
+    echo "<script type='text/javascript'>alert('$message');</script>";
   }
 }
 ?>

@@ -2,7 +2,7 @@
 // On include le fichier avec les fonctions
 include "php/functions.inc.php";
 
-if (!isset($_SESSION['user']) && $_SESSION['user']['idRole'] == "3") {
+if (!isset($_SESSION['user']) && $_SESSION['user']['idRole'] != "3") {
   header("Location: index.php");
   exit;
 }
@@ -83,7 +83,9 @@ $days = GetDays();
               <?php else: ?>
                 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="text-align: center">
                   <div class="services-wrapper">
-                    <h1><?php echo $match['terrain'] ?></h1>
+                    <?php $time = GetTimeForMatch($match['id']); ?>
+                    <h1><?php echo substr($time['debut'], 0, -3). " - ".substr($time['fin'], 0, -3) ?></h1>
+                    <h1>Terrain: <b><?php echo $match['terrain'] ?></b></h1>
                     <a href="<?php echo $link_to_edit ?>"><h3 style="color: green;">Enrengistrer un résultat</h3></a>
                   </div>
                 </div>

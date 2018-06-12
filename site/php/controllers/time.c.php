@@ -81,3 +81,31 @@ function GetTimeById($id){
   }
   return $res;
 }
+
+/**
+* Récupère l'heure de début et l'heure de fin d'un match
+*
+* @param string $idGame -> l'id du match
+* @return array un tableau avec le nombre de matchs
+*              ['debut'] -> l'heure du début
+*              ['fin'] -> l'heure de fin
+*/
+function GetTimeForMatch($idGame){
+  static $query = null;
+
+  if ($query == null) {
+    $req = "SELECT `Time`.`start` as debut, `Time`.`end` as fin FROM `Time` WHERE `Time`.`id` IN (SELECT `Games`.`idTime` FROM `Games` WHERE `Games`.`id` = :idGame)";
+    $query = connecteur()->prepare($req);
+  }
+  try {
+    $query->bindParam(':idGame', $idGame, PDO::PARAM_STR);
+    $query->execute();
+    $res = $query->fetch(PDO::FETCH_ASSOC);
+  }
+  catch (Exception $e) {
+    error_log($e->getMessage());
+    $res = false;
+  }
+
+  return $res;
+}

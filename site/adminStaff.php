@@ -21,8 +21,15 @@ if(filter_has_var(INPUT_POST, "ajouter")){
   $prenom = trim(filter_input(INPUT_POST, "prenom", FILTER_SANITIZE_STRING));
   $idRole = trim(filter_input(INPUT_POST, "role", FILTER_SANITIZE_STRING));
 
-  // On ajoute un nouveau membre du staff
-  AddStaff($nom, $prenom, $idRole);
+  $role = GetRoleById($idRole);
+
+  if ($nom != null && $prenom != null && $role != false) {
+    // On ajoute un nouveau membre du staff
+    AddStaff($nom, $prenom, $idRole);
+  }else{
+    $message = "Veuillez remplir tout les champs";
+    echo "<script type='text/javascript'>alert('$message');</script>";
+  }
 }
 
 // Regarde si le bouton modifier à été appuyer

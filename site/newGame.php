@@ -23,16 +23,30 @@ if(filter_has_var(INPUT_POST, "continuer")){
   $arbitre = trim(filter_input(INPUT_POST, "arbitre", FILTER_SANITIZE_STRING));
   $type = trim(filter_input(INPUT_POST, "type", FILTER_SANITIZE_STRING));
 
-  // On introduit toutes infos du match dans
-  $_SESSION['newGame']['time'] = $time;
-  $_SESSION['newGame']['day'] = $day;
-  $_SESSION['newGame']['field'] = $field;
-  $_SESSION['newGame']['arbitre'] = $arbitre;
-  $_SESSION['newGame']['type'] = substr($type, 0, 1);
-  $_SESSION['newGame']['sport'] = substr($type, -1);
+  // On test toutes les entrées
+  $test_time = GetTimeById($time);
+  $test_day = GetDayById($day);
+  $test_field = GetFieldById($field);
+  $test_arbitre = GetStaffById($arbitre);
+  $test_type = GetSportById(substr($type, -1));
 
-  header("Location: addTeamsToGame.php");
-  exit;
+  if ($test_time != false && $test_day != false && $test_field != false && $test_arbitre != false && $test_type != false) {
+    // On introduit toutes infos du match dans
+    $_SESSION['newGame']['time'] = $time;
+    $_SESSION['newGame']['day'] = $day;
+    $_SESSION['newGame']['field'] = $field;
+    $_SESSION['newGame']['arbitre'] = $arbitre;
+    $_SESSION['newGame']['type'] = substr($type, 0, 1);
+    $_SESSION['newGame']['sport'] = substr($type, -1);
+
+    header("Location: addTeamsToGame.php");
+    exit;
+  }else{
+    $message = "Veuillez remplir tout les champs avec des données valables";
+    echo "<script type='text/javascript'>alert('$message');</script>";
+  }
+
+
 }
 
 ?>
@@ -87,7 +101,7 @@ if(filter_has_var(INPUT_POST, "continuer")){
 
               <div class="form-group">
                 <label for="formGroupExampleInput">Horaire</label>
-                <select class="form-control" name="time">
+                <select class="form-control" name="time" required>
                   <?php for ($t=0; $t < count($times); $t++):?>
                     <option value="<?php echo $times[$t]['id']?>"><?php echo $times[$t]['start']. " - ". $times[$t]['end']?></option>
                   <?php endfor; ?>
@@ -96,7 +110,7 @@ if(filter_has_var(INPUT_POST, "continuer")){
 
               <div class="form-group">
                 <label for="formGroupExampleInput">Jour</label>
-                <select class="form-control" name="day">
+                <select class="form-control" name="day" required>
                   <?php for ($d=0; $d < count($days); $d++):?>
                     <option value="<?php echo $days[$d]['id']?>"><?php echo $days[$d]['nomJour']?></option>
                   <?php endfor; ?>
@@ -105,7 +119,7 @@ if(filter_has_var(INPUT_POST, "continuer")){
 
               <div class="form-group">
                 <label for="formGroupExampleInput2">Terrain</label>
-                <select class="form-control" name="field">
+                <select class="form-control" name="field" required>
                   <?php for ($f=0; $f < count($fields); $f++):?>
                     <option value="<?php echo $fields[$f]['id']?>"><?php echo $fields[$f]['Nom']?></option>
                   <?php endfor; ?>
@@ -114,7 +128,7 @@ if(filter_has_var(INPUT_POST, "continuer")){
 
               <div class="form-group">
                 <label for="formGroupExampleInput2">Arbitre</label>
-                <select class="form-control" name="arbitre">
+                <select class="form-control" name="arbitre" required>
                   <?php for ($a = 0; $a < count($arbitres); $a++):?>
                     <option value="<?php echo $arbitres[$a]['id']?>"><?php echo $arbitres[$a]['prenom']?></option>
                   <?php endfor; ?>
@@ -123,7 +137,7 @@ if(filter_has_var(INPUT_POST, "continuer")){
 
               <div class="form-group">
                 <label for="formGroupExampleInput2">Type de match</label>
-                <select class="form-control" name="type">
+                <select class="form-control" name="type" required>
                   <?php
                     for ($sport=0; $sport < count($sports); $sport++):
                   ?>

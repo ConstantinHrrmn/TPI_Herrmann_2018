@@ -53,3 +53,30 @@ function GetMatchsOnDayAndTime($day, $time){
   }
   return $res;
 }
+
+/**
+* Récupère le jour d'apres son id
+*
+* @param string l'id du jour
+* @return array un tableau avec tout les jours
+*           [index]
+*              ['id'] -> l'id du jour
+*              ['nomJour'] -> le nom du jour
+*/
+function GetDayById($id){
+  static $query = null;
+  if ($query == null) {
+    $req = "SELECT `id`, `nomJour` FROM `Day` WHERE `id` = :id";
+    $query = connecteur()->prepare($req);
+  }
+  try {
+    $query->bindParam(':id', $id, PDO::PARAM_STR);
+    $query->execute();
+    $res = $query->fetchAll(PDO::FETCH_ASSOC);
+  }
+  catch (Exception $e) {
+    error_log($e->getMessage());
+    $res = false;
+  }
+  return $res;
+}

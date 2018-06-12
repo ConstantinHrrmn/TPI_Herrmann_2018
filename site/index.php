@@ -114,7 +114,7 @@ if(filter_has_var(INPUT_POST, "submit")){
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
               <div class="contact-wrapper">
                 <?php if ($error):
-                  $message = "Utilisateur ou identifiant éronné";
+                  $message = "Identifiant ou mot de passe éronné...";
                   echo "<script type='text/javascript'>alert('$message');</script>";
                   ?>
                   <div class="alert alert-danger" role="alert">
