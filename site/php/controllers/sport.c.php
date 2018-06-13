@@ -57,6 +57,8 @@ function GetSportById($id){
 *
 * @param string le nombre de joueurs
 * @return array un tableau avec le sport
+*        ['id'] -> l'id du sport
+*        ['Nom'] -> le nom du sport
 *        ['nbEquipes'] -> le nombre d'équipes pour le sport
 */
 function GetIdsByPlayerCount($count){

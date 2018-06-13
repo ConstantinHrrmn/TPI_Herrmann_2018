@@ -13,11 +13,12 @@ else{
   $id = $_GET['id'];
   // On récupère les infos du match
   $match = GetAllMatchInfos($id);
-  if ($match['infos']['played'] == "1" && $_SESSION['user']['idRole'] == '3') {
+  if (($match['infos']['played'] == "1" && $_SESSION['user']['idRole'] == '3') || $match['infos'] == false) {
     // On rdirige sur l'index
     header("Location: index.php");
     exit;
   }
+
 }
 
 $error = false;
