@@ -13,6 +13,11 @@ else{
   $id = $_GET['id'];
   // On récupère les infos du match
   $match = GetAllMatchInfos($id);
+  if ($match['infos']['played'] == "1" && $_SESSION['user']['idRole'] == '3') {
+    // On rdirige sur l'index
+    header("Location: index.php");
+    exit;
+  }
 }
 
 $error = false;
@@ -26,9 +31,15 @@ if(filter_has_var(INPUT_POST, "enregistrer")){
     $result_team = $_POST[$match['teams'][$team]['numero']];
     // On vérifie qu'il s'agit bien d'un numero
     if (ctype_digit($result_team)){
-      $teams[$team]['score'] =  $result_team;
-      $teams[$team]['infos'] = $match['teams'][$team];
+      if ($result_team >= 0) {
+        $teams[$team]['score'] =  $result_team;
+      }else{
+        $teams[$team]['score'] =  0;
+      }
+    }else{
+      $teams[$team]['score'] =  0;
     }
+    $teams[$team]['infos'] = $match['teams'][$team];
   }
 
   // On met à jour les scores
@@ -94,7 +105,7 @@ if(filter_has_var(INPUT_POST, "enregistrer")){
                 ?>
                 <div class="form-group">
                   <label for="">équipe: <?php echo $teams_playing[$team]['numero'] ?></label>
-                  <input type="number" name="<?php echo $teams_playing[$team]['numero'] ?>" value="<?php echo $teams_playing[$team]['score'] ?>" class="btn btn-default">
+                  <input type="number" name="<?php echo $teams_playing[$team]['numero'] ?>" value="<?php echo $teams_playing[$team]['score'] ?>" class="btn btn-default" required min="0">
                 </div>
               <?php endfor; ?>
               <div class="form-group">

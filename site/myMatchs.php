@@ -67,6 +67,7 @@ $days = GetDays();
           for ($time=0; $time < count($times); $time++) :
             $time_provisoire = GetTimeById($times[$time]['idTime']);
             $match = GetMacthsForArbitreDayAndTime($arbitre['id'], $time_provisoire['id'], $days[$day]['id']);
+
             $link_to_edit = "editScore.php?id=".$match['id'];
             ?>
             <?php if ($match != false): ?>

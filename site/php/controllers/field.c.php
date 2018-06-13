@@ -29,7 +29,6 @@ function GetFields(){
 *
 * @param string l'id du terrain
 * @return array un tableau avec le terrain
-*           [index]
 *              ['id'] -> l'id du terrain
 *              ['Nom'] -> le nom du terrain
 */

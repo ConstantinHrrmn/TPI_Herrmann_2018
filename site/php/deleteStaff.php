@@ -8,6 +8,8 @@ if (!isset($_GET['id'])) {
   exit;
 }
 else{
+  // On vérifie si l'utilisateur est connecté et qu'il s'agit bien d'un administrateur
+  if (isset($_SESSION['user']) || $_SESSION['user']['idRole'] == "1") {
   // On récupère l'id de L'url
   $id = $_GET['id'];
 
@@ -15,6 +17,7 @@ else{
   // Supprime également le lien entre une équipe et lui
   DeleteStaff($id);
 
+  }
   // Redirection sur la page Admin Staff
   header("Location: ../adminStaff.php");
   exit;

@@ -103,7 +103,10 @@ if ($redirect) {
                 <?php endif; ?>
                 <h3><?php echo substr($time['start'], 0, -3). " - ".substr($time['end'], 0, -3) ?></h3>
                 <h1>Terrain: <?php echo $matchs_on_day_and_time['terrain'] ?></h1>
-                <a href="match.php?id=<?php echo $matchs_on_day_and_time['id'] ?>"><h4>infos match</h4></a>
+                <?php if ($matchs_on_day_and_time['played'] != "1"): ?>
+                  <a href="match.php?id=<?php echo $matchs_on_day_and_time['id'] ?>"><h4>infos match</h4></a>
+                <?php endif; ?>
+
               </div>
             </div>
           <?php endif; ?>

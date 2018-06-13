@@ -52,12 +52,17 @@ function CreateNewGame($time, $day, $field, $arbitre, $teams, $sport){
 * Récupère toutes infos du match
 *
 * @param string $id -> l'id du match
-* @return array un tableau avec le classement
-*           [index]
+* @return array un tableau avec les infos du match
+*           ['infos']
 *              ['id'] -> l'id de l'équipe
 *              ['played'] -> 1 si il as été joué, 0 si non
 *              ['terrain'] -> le nom du terrain
 *              ['arbitre'] -> le prenom de l'arbitre
+*           ['teams']
+*              [index]
+*                 ['numero'] -> le numéro de l'équipe
+*                 ['nom'] -> le nom de l'équipe
+*                 ['score'] -> le score de l'équipe
 */
 function GetAllMatchInfos($id){
   $match = [];
@@ -181,7 +186,7 @@ function GetMacthsForArbitreDayAndTime($idStaff, $idDay, $idTime){
   static $query = null;
 
   if ($query == null) {
-    $req = "SELECT `Games`.`id` as id, `Field`.`Nom`as terrain, `Games`.`played` as played FROM `Games` INNER JOIN `Field` ON `Field`.`id` = `Games`.`idTerrain` WHERE `Games`.`idArbitre` = :idStaff AND `Games`.`idJour` = :idDay AND `Games`.`idTime` = :idTime";
+    $req = "SELECT `Games`.`id` as id, `Field`.`Nom`as terrain, `Games`.`played` as played FROM `Games` INNER JOIN `Field` ON `Field`.`id` = `Games`.`idTerrain` WHERE `Games`.`idArbitre` = :idStaff AND `Games`.`idJour` = :idDay AND `Games`.`idTime` = :idTime LIMIT 1";
     $query = connecteur()->prepare($req);
   }
   try {

@@ -14,9 +14,16 @@ else{
   $DEFAULT_DAY = 1;
   // On récupère l'id dans l'url
   $id = $_GET['id'];
+  $day = GetDayById($id);
+  if ($day != false) {
+    // On recherche tout les fuseaux horaires pour un jour
+    $times = GetAllTimesOnDay($id);
+  }else{
+    // Si non, on redirige
+    header("location:index.php");
+    exit();
+  }
 
-  // On recherche tout les fuseaux horaires pour un jour
-  $times = GetAllTimesOnDay($id);
 }
 
 ?>

@@ -58,8 +58,7 @@ function GetMatchsOnDayAndTime($day, $time){
 * Récupère le jour d'apres son id
 *
 * @param string l'id du jour
-* @return array un tableau avec tout les jours
-*           [index]
+* @return array un tableau avec les infos du jour
 *              ['id'] -> l'id du jour
 *              ['nomJour'] -> le nom du jour
 */

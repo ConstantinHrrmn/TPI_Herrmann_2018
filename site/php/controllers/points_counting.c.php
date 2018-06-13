@@ -45,6 +45,10 @@ function UpdateScore($Teams, $idGame){
     }
   }
 
+
+  // Nous récupérons les résultats du match après la mise a jour des nouveaux résultats
+  $new_results = GetMatchResults($idGame, $game);
+
   /* On recherche de quel classement il s'agit
   Tchouckball = B
   KinBall = A
@@ -58,9 +62,6 @@ function UpdateScore($Teams, $idGame){
   }elseif ($classment['sport'] == 3) {
     $c_label = 'C';
   }
-
-  // Nous récupérons les résultats du match après la mise a jour des nouveaux résultats
-  $new_results = GetMatchResults($idGame, $game);
 
   // On parcours toutes les équipes du match
   for ($team=0; $team < count($Teams); $team++) {
@@ -127,32 +128,6 @@ function UpdateScore($Teams, $idGame){
     // On met à jour la table principale
     UpdateMainTable($idTeam, $final_new_results['p'], $final_new_results['m'], $final_new_results['r'], $c_label);
   }
-}
-
-/**
-* Retourne le classement principale pour une équipe dans un classement
-*
-* @param string l'id de l'équipe
-* @param string l'id du match dans lequel les scores on été obtenus
-* @return array {id; p; m; r} ou false si non valide
-*/
-function GetMainClassement($idTeam, $classment){
-  static $query = null;
-  if ($query == null) {
-    $req = "SELECT `id`, `p_".$classment."` as p, `m_".$classment."` as m, `r_".$classment."` as r FROM `Teams` WHERE `id` = :idTeam";
-    $query = connecteur()->prepare($req);
-  }
-  try {
-    $query->bindParam(':idTeam', $idTeam, PDO::PARAM_STR);
-    $query->execute();
-
-    $res = $query->fetch(PDO::FETCH_ASSOC);
-  }
-  catch (Exception $e) {
-    error_log($e->getMessage());
-    $res = false;
-  }
-  return $res;
 }
 
 /**
