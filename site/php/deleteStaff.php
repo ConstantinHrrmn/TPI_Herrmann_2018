@@ -1,4 +1,16 @@
 <?php
+/*******************************************************************************
+AUTEUR      : Constantin Herrmann
+LIEU        : CFPT Informatique Genève
+DATE        : 14.06.2018
+
+TITRE PROJET: KidsGames Geneva Score
+
+TITRE PAGE  : deleteStaff
+DESCRIPTION : Ce script permet de supprimer un membre du staff
+VERSION     : 1.0
+*******************************************************************************/
+
 include "functions.inc.php";
 
 // Vérifie si l'id est indiqué dans l'url

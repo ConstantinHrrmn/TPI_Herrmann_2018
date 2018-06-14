@@ -1,4 +1,16 @@
 <?php
+/*******************************************************************************
+AUTEUR      : Constantin Herrmann
+LIEU        : CFPT Informatique Genève
+DATE        : 14.06.2018
+
+TITRE PROJET: KidsGames Geneva Score
+
+TITRE PAGE  : pdo
+DESCRIPTION : Ce script permet la connexion à la base de données
+VERSION     : 1.0
+*******************************************************************************/
+
 session_start();
 
 //Constantes

@@ -1,4 +1,16 @@
 <?php
+/*******************************************************************************
+AUTEUR      : Constantin Herrmann
+LIEU        : CFPT Informatique Genève
+DATE        : 14.06.2018
+
+TITRE PROJET: KidsGames Geneva Score
+
+TITRE PAGE  : admin.c
+DESCRIPTION : Ce script contient toutes les fonctions concernant les administrateurs
+VERSION     : 1.0
+*******************************************************************************/
+
 /**
 * ResetCamp permet de faire un reset du Camp
 * Remise à zéro de tout les classements

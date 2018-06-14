@@ -1,4 +1,16 @@
 <?php
+/*******************************************************************************
+AUTEUR      : Constantin Herrmann
+LIEU        : CFPT Informatique Genève
+DATE        : 14.06.2018
+
+TITRE PROJET: KidsGames Geneva Score
+
+TITRE PAGE  : editScore
+DESCRIPTION : Cette page permet d'enregistrer ou de modifier les résultats d'un match
+VERSION     : 1.0
+*******************************************************************************/
+
 // On include le fichier avec les fonctions
 include "php/functions.inc.php";
 

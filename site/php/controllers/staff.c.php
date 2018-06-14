@@ -1,4 +1,16 @@
 <?php
+/*******************************************************************************
+AUTEUR      : Constantin Herrmann
+LIEU        : CFPT Informatique Genève
+DATE        : 14.06.2018
+
+TITRE PROJET: KidsGames Geneva Score
+
+TITRE PAGE  : staff.c
+DESCRIPTION : Ce script contient toutes les fonctions concernant le staff
+VERSION     : 1.0
+*******************************************************************************/
+
 /**
 * Récupère un coach en fonction de son id
 * Si le coach ou l'id n'éxiste pas alors le return sera égal à FALSE

@@ -1,11 +1,26 @@
 <?php
+/*******************************************************************************
+AUTEUR      : Constantin Herrmann
+LIEU        : CFPT Informatique Genève
+DATE        : 14.06.2018
+
+TITRE PROJET: KidsGames Geneva Score
+
+TITRE PAGE  : teams
+DESCRIPTION : Cette page affiche toutes les équipes avec leur numéro et leur nom ainsi que le nom du coach
+VERSION     : 1.0
+*******************************************************************************/
+
 include "php/functions.inc.php";
 
 $admin = false;
+
+// On vérifie si l'utilisateur est connecté et qu'il s'agit bien d'un administrateur
 if (isset($_SESSION['user']) && $_SESSION['user']['idRole'] == "1") {
   $admin = true;
 }
 
+// On récupère toutes les équipes
 $teams = GetAllteams();
 
 ?>

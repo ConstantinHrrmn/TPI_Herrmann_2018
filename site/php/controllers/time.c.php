@@ -1,4 +1,16 @@
 <?php
+/*******************************************************************************
+AUTEUR      : Constantin Herrmann
+LIEU        : CFPT Informatique Genève
+DATE        : 14.06.2018
+
+TITRE PROJET: KidsGames Geneva Score
+
+TITRE PAGE  : time.c
+DESCRIPTION : Ce script contient toutes les fonctions concernant les heures
+VERSION     : 1.0
+*******************************************************************************/
+
 // Récupères toutes les heures
 /**
 * Récupère tout les fuseaux horaires de la table Time

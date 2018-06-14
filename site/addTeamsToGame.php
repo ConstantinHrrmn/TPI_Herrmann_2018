@@ -1,4 +1,17 @@
 <?php
+/*******************************************************************************
+AUTEUR      : Constantin Herrmann
+LIEU        : CFPT Informatique Genève
+DATE        : 14.06.2018
+
+TITRE PROJET: KidsGames Geneva Score
+
+TITRE PAGE  : addTeamsToGame
+DESCRIPTION : Cette page permet à un adminsitrateur d'ajouter des équipes au
+              match qu'il est en train de créer
+VERSION     : 1.0
+*******************************************************************************/
+
 // On include le fichier avec les fonctions
 include "php/functions.inc.php";
 

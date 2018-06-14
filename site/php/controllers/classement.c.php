@@ -1,4 +1,16 @@
 <?php
+/*******************************************************************************
+AUTEUR      : Constantin Herrmann
+LIEU        : CFPT Informatique Genève
+DATE        : 14.06.2018
+
+TITRE PROJET: KidsGames Geneva Score
+
+TITRE PAGE  : classement.c
+DESCRIPTION : Ce script contient toutes les fonctions concernant les classement
+VERSION     : 1.0
+*******************************************************************************/
+
 /**
 * Récupère le classement sélectionner
 * A = Kinball

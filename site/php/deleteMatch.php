@@ -1,4 +1,16 @@
 <?php
+/*******************************************************************************
+AUTEUR      : Constantin Herrmann
+LIEU        : CFPT Informatique Genève
+DATE        : 14.06.2018
+
+TITRE PROJET: KidsGames Geneva Score
+
+TITRE PAGE  : deleteMatch
+DESCRIPTION : Ce script permet de supprimer un match
+VERSION     : 1.0
+*******************************************************************************/
+
 // On vérifie si l'utilisateur est connecté et qu'il s'agit bien d'un administrateur
 include "functions.inc.php";
 if (isset($_GET['id'])) {

@@ -1,4 +1,15 @@
 <?php
+/*******************************************************************************
+AUTEUR      : Constantin Herrmann
+LIEU        : CFPT Informatique Genève
+DATE        : 14.06.2018
+
+TITRE PROJET: KidsGames Geneva Score
+
+TITRE PAGE  : team.c
+DESCRIPTION : Ce script contient toutes les fonctions concernant les équipes
+VERSION     : 1.0
+*******************************************************************************/
 
 /**
 * Récupère toutes les équipes dans la table Teams

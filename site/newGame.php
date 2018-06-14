@@ -1,6 +1,21 @@
 <?php
+/*******************************************************************************
+AUTEUR      : Constantin Herrmann
+LIEU        : CFPT Informatique Genève
+DATE        : 14.06.2018
+
+TITRE PROJET: KidsGames Geneva Score
+
+TITRE PAGE  : newGame
+DESCRIPTION : Cette page permet à un administrateur de créer un nouveau
+              Elle permet de sélectionner les propriétés du match
+VERSION     : 1.0
+*******************************************************************************/
+
 // On include le fichier avec les fonctions
 include "php/functions.inc.php";
+
+// On vérifie si l'utilisateur est connecté et qu'il s'agit bien d'un administrateur
 if (!isset($_SESSION['user']) || $_SESSION['user']['idRole'] != "1") {
   header("Location: index.php");
   exit;

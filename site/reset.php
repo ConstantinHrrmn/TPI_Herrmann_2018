@@ -1,6 +1,19 @@
 <?php
+/*******************************************************************************
+AUTEUR      : Constantin Herrmann
+LIEU        : CFPT Informatique Genève
+DATE        : 14.06.2018
+
+TITRE PROJET: KidsGames Geneva Score
+
+TITRE PAGE  : reset
+DESCRIPTION : Cette page permet à un administrateur de remttre à zéro le camp en cours
+VERSION     : 1.0
+*******************************************************************************/
+
 include "php/functions.inc.php";
 
+// On vérifie si l'utilisateur est connecté et qu'il s'agit bien d'un administrateur
 if (!isset($_SESSION['user']) || $_SESSION['user']['idRole'] != 1) {
   header("Location: index.php");
   exit;
@@ -8,7 +21,9 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['idRole'] != 1) {
 
 if(filter_has_var(INPUT_POST, "submit")){
   $admin_pwd = $id = trim(filter_input(INPUT_POST, "pwd", FILTER_SANITIZE_STRING));
+  // On verifie le mot de passe super-admin
   if (sha1($admin_pwd) == "f3b3f056c16229db159a1d7400d604ca56e293f5") {
+    // On remet à zero le camp
     ResetCamp();
     $message = "Camp réinitialisé avec succès";
     echo "<script type='text/javascript'>alert('$message');</script>";

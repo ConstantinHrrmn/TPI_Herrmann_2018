@@ -1,4 +1,16 @@
 <?php
+/*******************************************************************************
+AUTEUR      : Constantin Herrmann
+LIEU        : CFPT Informatique Genève
+DATE        : 14.06.2018
+
+TITRE PROJET: KidsGames Geneva Score
+
+TITRE PAGE  : sport.c
+DESCRIPTION : Ce script contient toutes les fonctions concernant les sports
+VERSION     : 1.0
+*******************************************************************************/
+
 /**
 * Retourne tous les types de scores de la table Sport
 *

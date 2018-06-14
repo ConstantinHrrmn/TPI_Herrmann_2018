@@ -1,4 +1,16 @@
 <?php
+/*******************************************************************************
+AUTEUR      : Constantin Herrmann
+LIEU        : CFPT Informatique Genève
+DATE        : 14.06.2018
+
+TITRE PROJET: KidsGames Geneva Score
+
+TITRE PAGE  : myTeam
+DESCRIPTION : Affiche tout le planning des matchs de la semaine pour une équipe
+VERSION     : 1.0
+*******************************************************************************/
+
 // On include le fichier avec les fonctions
 include "php/functions.inc.php";
 $redirect = false;

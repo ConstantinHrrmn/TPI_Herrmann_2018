@@ -1,4 +1,15 @@
 <?php
+/*******************************************************************************
+AUTEUR      : Constantin Herrmann
+LIEU        : CFPT Informatique Genève
+DATE        : 14.06.2018
+
+TITRE PROJET: KidsGames Geneva Score
+
+TITRE PAGE  : points_counting.c
+DESCRIPTION : Ce script contient toutes les fonctions concernant le calcule des points pour les matchs
+VERSION     : 1.0
+*******************************************************************************/
 
 /**
 * Met à jour les scores et le classement général
