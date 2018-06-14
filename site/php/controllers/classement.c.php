@@ -34,7 +34,7 @@ function GetClassement($classement){
  * Retourne le classement principale pour une équipe dans un classement
  *
  * @param string l'id de l'équipe
- * @param string l'id du match dans lequel les scores on été obtenus
+ * @param string la lettre du classement
  * @return array {id; p; m; r} ou false si non valide
  */
  function GetMainClassement($idTeam, $classment){

@@ -14,7 +14,7 @@ if (!isset($_GET['id'])) {
 
   // On vérifie si l'équipe existe ou non
   if ($team == false)
-    $redirect = true;
+  $redirect = true;
 
   // On récupère tout les jours
   $days = GetDays();
@@ -100,13 +100,15 @@ if ($redirect) {
               <div class="services-wrapper">
                 <?php if ($matchs_on_day_and_time['played'] == "1"): ?>
                   <h1 style="color: green">MATCH TERMINE</h1>
-                <?php endif; ?>
-                <h3><?php echo substr($time['start'], 0, -3). " - ".substr($time['end'], 0, -3) ?></h3>
-                <h1>Terrain: <?php echo $matchs_on_day_and_time['terrain'] ?></h1>
-                <?php if ($matchs_on_day_and_time['played'] != "1"): ?>
+                  <?php $match = GetAllMatchInfos($matchs_on_day_and_time['id']); ?>
+                  <?php for ($i=0; $i < count($match['teams']); $i++):?>
+                    <h2>n°: <?php echo $match['teams'][$i]['numero']; ?> - <?php echo $match['teams'][$i]['score']; ?></h2>
+                  <?php endfor; ?>
+                <?php else: ?>
+                  <h3><?php echo substr($time['start'], 0, -3). " - ".substr($time['end'], 0, -3) ?></h3>
+                  <h1>Terrain: <?php echo $matchs_on_day_and_time['terrain'] ?></h1>
                   <a href="match.php?id=<?php echo $matchs_on_day_and_time['id'] ?>"><h4>infos match</h4></a>
                 <?php endif; ?>
-
               </div>
             </div>
           <?php endif; ?>

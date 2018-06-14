@@ -35,10 +35,8 @@ if(filter_has_var(INPUT_POST, "submit")){
   }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en" class="no-js" >
-
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -56,7 +54,6 @@ if(filter_has_var(INPUT_POST, "submit")){
 </head>
 
 <body data-spy="scroll" data-target="#menu-section">
-
   <div class="navbar navbar-inverse navbar-fixed-top scroll-me" id="menu-section" >
     <div class="container">
       <div class="navbar-header">
@@ -72,11 +69,9 @@ if(filter_has_var(INPUT_POST, "submit")){
       <?php include "php/navbar.inc.php" ?>
     </div>
   </div>
-
   <section id="services" style="margin-top: 10%" >
     <div class="container">
       <div class="row animate-in" data-anim-type="fade-in-up">
-
         <?php
         $days = GetDays();
         for ($day=0; $day < count($days); $day++):
@@ -84,7 +79,6 @@ if(filter_has_var(INPUT_POST, "submit")){
           $label_match = $matchs_count['matchs'] > 1 ? $matchs_count['matchs']." matchs" : ($matchs_count['matchs'] == 1 ? $matchs_count['matchs']." match" : "Aucun match");
           $linktoDay = "day.php?id=".$days[$day]['id'];
           ?>
-
           <a href="<?php echo $linktoDay; ?>" style="color: white">
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" style="text-align: center">
               <div class="services-wrapper">
@@ -93,13 +87,10 @@ if(filter_has_var(INPUT_POST, "submit")){
               </div>
             </div>
           </a>
-
         <?php endfor; ?>
-
       </div>
     </div>
   </section>
-
   <?php if (!isset($_SESSION['user'])): ?>
       <section id="connexion" >
         <div class="container">
@@ -109,7 +100,6 @@ if(filter_has_var(INPUT_POST, "submit")){
               <hr />
             </div>
           </div>
-
           <div class="row animate-in" data-anim-type="fade-in-up">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
               <div class="contact-wrapper">
@@ -121,7 +111,6 @@ if(filter_has_var(INPUT_POST, "submit")){
                     <strong>Oups !</strong> Identifiant ou mot de passe éronné...
                   </div>
                 <?php endif; ?>
-
                 <form class="" action="#" method="post">
                   <div class="form-group">
                     <label for="formGroupExampleInput">Login</label>
@@ -135,14 +124,12 @@ if(filter_has_var(INPUT_POST, "submit")){
                     <input type="submit" name="submit" value="Connexion" class="btn btn-default">
                   </div>
                 </form>
-
               </div>
             </div>
           </div>
         </div>
       </section>
     <?php endif; ?>
-
   <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME -->
   <!-- CORE JQUERY -->
   <script src="assets/js/jquery-1.11.1.js"></script>
