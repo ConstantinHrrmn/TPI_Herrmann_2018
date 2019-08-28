@@ -15,7 +15,7 @@ session_start();
 
 //Constantes
 define("DB_HOST", "localhost");
-define("DB_NAME", "TPI_kggs");
+define("DB_NAME", "tpi_kggs");
 define("DB_USER", "TPI_dba");
 define("DB_PASSWORD", "Tpi2018");
 
